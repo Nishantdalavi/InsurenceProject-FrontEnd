@@ -1,0 +1,125 @@
+<div class="wrapper">
+
+    <div class="container mt-3">
+        <table class="table table-hover table-responsive-md table-light mt-3">
+            <thead>
+
+                <tr class="text-center">
+                    <th>Installment Number</th>
+                    <th>Installment Amount</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="text-center" *ngFor="let emi of installment; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td><span style="font-family: 'RupeeFont';">₹</span>
+                        {{ policy.premium }}</td>
+                    <td>{{ calculateDueDate(i) | date : "dd-MM-YYYY" }}</td>
+                    <td>
+                        <div *ngIf="i == policy.paymentCount">
+                            <button class="btn btn-primary" (click)="showPaymentModal(i)">
+                                Pay Premium
+                            </button>
+                        </div>
+                        <div *ngIf="i < policy.paymentCount">
+                            <h6>Paid</h6>
+                        </div>
+                        <div *ngIf="i > policy.paymentCount">
+                            <h6>Pay Premium</h6>
+                        </div>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+
+<!-- Paypremium modal -->
+<div class="container">
+    <div class="modal fade" id="emiPaymentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: darkblue;">Enter Card Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <tr>
+                            <td>Premium:</td>
+                            <td><span style="font-family: 'RupeeFont';">₹</span>
+                                {{ policy.premium }}</td>
+                        </tr>
+                        <tr>
+                            <td>Tax Percent:</td>
+                            <td>{{ Tax.taxPercent}}&#37;</td>
+                        </tr>
+                        <tr>
+                            <td>Total Amount:</td>
+                            <td>&#8377;{{ calculateTotalAmoutToPay() }}</td>
+                        </tr>
+                        <hr />
+                        <tr>
+                            <td>Enter Card Details:</td>
+                        </tr>
+
+                        <div class="container">
+                            <form [formGroup]="PaymentForm">
+                                <div class="row">
+                                    <div class="col">Payment Type*</div>
+                                    <div class="col">
+                                        <select class="menu" formControlName="payType">
+                                            <option value="0">Debit Card</option>
+                                            <option value="1">Credit Card</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">Card HolderName*</div>
+                                    <div class="col">
+                                        <input class="input" type="text" placeholder="Card Holder Name"
+                                            formControlName="cName" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">Card Number*</div>
+                                    <div class="col">
+                                        <input class="input" type="number" formControlName="cNumber"
+                                            placeholder="Card Number" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">CVV*</div>
+                                    <div class="col">
+                                        <input class="input" formControlName="cvv" type="text" placeholder="CVV " />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">Expiry Date*</div>
+                                    <div class="col">
+                                        <input class="input" formControlName="DateOfExpiry" type="date" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                    <button id="save" type="button" class="btn btn-primary" (click)="PayPremium()">
+                        Pay
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

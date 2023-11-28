@@ -1,0 +1,104 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!-- Container wrapper -->
+    <div class="container">
+        <!-- Navbar brand -->
+        <!-- Toggle button -->
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarButtonsExample"
+            aria-controls="navbarButtonsExample" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse" id="navbarButtonsExample">
+            <!-- Left links -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <!-- Profile icon -->
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#"> <mat-icon aria-hidden="false" aria-label="Example home icon"
+                            type="button" fontIcon="home" title="Previous Page" href="#"></mat-icon></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        Insurance
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item" href="/plan">Insurance Plan</a></li>
+                        <li><a class="dropdown-item" href="/insuranceScheme">Insurance Scheme</a></li>
+                        <li><a class="dropdown-item" href="/schemeDetail">Scheme Details </a></li>
+                    </ul>
+                </li>
+
+            </ul>
+
+            <!-- Left links -->
+
+            <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center">
+                    <button type="button" class="btn btn-primary me-3" title="Profile" (click)="showUserProfile()">
+                        <i class="fas fa-user"></i>
+                    </button>
+                </div>
+
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            Transcations
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="/claim">Claims</a></li>
+                            <li><a class="dropdown-item" href="/commission">Commissions</a></li>
+                            <li><a class="dropdown-item" href="/payment">Payments</a></li>
+                        </ul>
+
+                    </li>
+                </ul>
+
+                <!-- <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><button class="dropdown-item"  data-bs-toggle="modal"
+              data-bs-target="#taxPercentModal">Tax Percent</button></li> -->
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            Setting
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><button class="dropdown-item" routerLink="/admin/tax">Tax Percent</button>
+                            </li>
+                            <li><a class="dropdown-item" href="/password">Password</a></li>
+                            <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
+                        </ul>
+
+                    </li>
+                </ul>
+                <!-- <button type="button" class="btn btn-primary me-3" (click)="logout()">
+                    Logout
+                </button> -->
+                <!-- <ul class="no-bullets">
+                    <li><a routerLink="/password"><i class="no-bullets" class="fas fa-key fa-2x custom-tooltip"
+                                title="Change Password"></i></a></li>
+                </ul> -->
+            </div>
+        </div>
+        <!-- Collapsible wrapper -->
+    </div>
+    <!-- Container wrapper -->
+</nav>
+<!-- Navbar -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-4" *ngFor="let card of cards">
+            <div class="card mb-4" [routerLink]="card.route">
+                <div class="card-body">
+                    <!-- <i class="fa {{ card.icon }}"></i> -->
+                    <img src="{{ card.icon }}" alt="{{ card.title }}" width="144" height="144"> 
+                    <h5 class="card-title">{{ card.title }}</h5>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

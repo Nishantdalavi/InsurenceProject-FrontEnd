@@ -1,0 +1,64 @@
+/* Navigation Bar Styles */
+.navbar {
+    background-color: #009FBD; /* Change the background color to dark grey (#333) */
+    padding: 10px; /* Add padding to the navbar if needed */
+}
+
+/* .navbar-brand img {
+    width: 90px;
+    height: 90px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    
+} */
+
+.navbar-toggler-icon {
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 3px;
+}
+
+/* Center the navbar content */
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Style the navigation links */
+.navbar-nav {
+    text-align: center;
+}
+
+.navbar-nav .nav-item {
+    margin-right: 10px;
+}
+
+.nav-link {
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+ .bg-custom-pink {
+    background-color: rgb(165, 218, 231);
+} 
+
+
+
+/* Style the dropdown menu */
+.dropdown-menu {
+    background-color: #114263;
+    border: 1px solid #fff;
+    border-radius: 1;
+}
+
+.dropdown-item {
+    color: #b0aaaa;
+    text-transform: capitalize;
+}
+
+/* Center the dropdown menu content */
+.dropdown-menu {
+    text-align: center;
+}
+

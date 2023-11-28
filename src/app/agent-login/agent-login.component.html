@@ -1,0 +1,111 @@
+<!-- <div class="container">
+    <form [formGroup]="loginForm" (ngSubmit)="loginUser()" class="my-login-form">
+        <div class="form-group">
+            <label for="userName" class="form-label">Username <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="userName" placeholder="Username" formControlName="userName">
+        </div>
+        <div class="form-group">
+            <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+            <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" [disabled]="loading">Agent Login</button>
+    <p>
+                        <span class="required">*</span>Required field
+                      </p>
+                </form>
+    <div *ngIf="loading" class="spinner-container">
+        Add your spinner component or loading animation here 
+        <mat-spinner diameter="30" color="primary"></mat-spinner>
+    </div>
+</div> -->
+
+
+
+
+<!-- <div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Agent Login</div>
+                <div class="card-body">
+                    <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
+                        <div class="mb-3">
+                            <label for="userName" class="form-label">Username <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="userName" id="userName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" formControlName="password" id="password"
+                                required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    <p>
+                        <span class="required">*</span>Required field
+                      </p>
+                </form>
+                </div>
+            </div>
+        </div>
+        <mat-spinner diameter="30" color="primary"></mat-spinner>
+    </div>
+</div> -->
+
+
+<!-- <div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Agent Login</div>
+                <div class="card-body">
+                    <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
+                        <div class="mb-3">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Username</mat-label>
+                                <input matInput formControlName="userName" required>
+                            </mat-form-field>
+                        </div>
+                        <div class="mb-3">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Password</mat-label>
+                                <input matInput type="password" formControlName="password" required>
+                            </mat-form-field>
+                        </div>
+                        <button mat-raised-button color="primary" type="submit">Login</button>
+                    <p>
+                        <span class="required">*</span>Required field
+                      </p>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Agent Login</div>
+                <div class="card-body">
+                    <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
+                        <div class="mb-3">
+                            <label for="userName" class="form-label">Username <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="userName" formControlName="userName">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="password" formControlName="password">
+                        </div>
+                        <button type="submit" class="btn btn-primary" [disabled]="loading">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status"
+                                aria-hidden="true"></span>
+                            <span *ngIf="!loading">Login</span>
+                        </button>
+                        <p>
+                            <span class="required">*</span>Required field
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

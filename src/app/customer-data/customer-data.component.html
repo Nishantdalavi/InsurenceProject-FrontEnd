@@ -1,0 +1,528 @@
+<app-employeeheader></app-employeeheader> 
+<div class="container-fulid">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Customer</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addPlan"
+                    type="submit">Add Customer</button>
+            </div>
+        </div>
+        <button class="btn btn-outline-primary float-end mt-2" routerLink="/employee/header">Back</button>
+    </nav>
+    <div class="search-container">
+        <input type="text" class="form-control search" id="searchQuery" [(ngModel)]="searchQuery" (keyup)="onSearch()"
+            placeholder="Start filtering by id or first name.." />
+
+    </div>
+    <table class="table table-hover mt-4">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Sr No</th>
+                <th scope="col">CustomerId</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">phone</th>
+                <th scope="dOB">Birth Date</th>
+                <th scope="col">Address</th>
+                <th scope="col">state</th>
+                <th scope="col">City</th>
+                <th scope="col">Agent</th>
+                <th scope="col">Status</th>
+                <!-- <th scope="col">Query count</th>
+                <th scope="col">Document Count</th>
+                <th scope="col">Policies count</th> -->
+                <th scope="col">Edit</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let customer of customers;let i=index">
+                <td>{{calculateSRNumber(i)}}</td>
+                <td>{{customer.customerId}}</td>
+                <td>{{customer.customerFirstName}}</td>
+                <td>{{customer.customerLastName}}</td>
+                <td>{{customer.email}}</td>
+                <td>{{customer.phone}}</td>
+                <td>{{customer.dob|date}}</td>
+                <td>{{customer.address}}</td>
+                <td>{{customer.state}}</td>
+                <td>{{customer.city}}</td>
+                <td>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" (click)="fetchAgentDetails(customer.agentId)"
+                            [disabled]="!customer.agentId">View</button>
+                        <span *ngIf="!customer.agentId">No Agent Available</span>
+                    </div>
+                </td>
+
+                <td>
+
+                    <button type="button" class="btn btn-outline-danger" (click)="deleteCustomer(customer)">Change
+                    </button>
+                    <p [ngClass]="{'text-success': customer.status, 'text-danger': !customer.status}">
+                        {{ customer.status ? 'Active' : 'Inactive' }}
+                    </p>
+                </td>
+                <!-- <td>{{customer.documentsCount}}</td>
+                <td>{{customer.policiesCount}}</td>
+                <td>{{customer.queryCount}}</td> -->
+
+
+
+                <td>
+                    <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal"
+                        data-bs-target="#editPlan" (click)="editCustomer(customer)" [disabled]="customer.status=== false"
+                        >Edit</button>
+                    <!-- <button type="button" class="btn btn-outline-danger" (click)="deleteCustomer(customer)">Change
+                        Status</button> -->
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="pagination-controls">
+        <!-- Other pagination elements -->
+        <label for="pageSizeSelect">Page Size:</label>
+        <select id="pageSizeSelect" class="form-control" (change)="onPageSizeChange($event)">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <!-- Add more options as needed -->
+        </select>
+    </div>
+
+    <nav aria-label="Page navigation example ">
+        <ul class="pagination justify-content-center">
+            <li class="page-item  text-center " *ngFor="let page of pageNumbers">
+                <a class="page-link" [ngClass]="{ active: currentPage === page }" (click)="changePage(page)">{{ page
+                    }}</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+
+
+
+<!-- ADD PLan -->
+<div class="modal fade" id="addPlan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5" id="exampleModalLabel">Add Customer</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="customerDetail">
+                    <!-- <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Customer ID <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" formControlName="customerId" id="customerId"
+                                aria-describedby="emailHelp" placeholder="0">
+                        </div> -->
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">First Name <span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="customerFirstName"
+                            id="customerFirstName" aria-describedby="emailHelp">
+                        <div
+                            *ngIf="customerDetail.controls['customerFirstName'].errors && (customerDetail.controls['customerFirstName'].dirty || customerDetail.controls['customerFirstName'].touched)">
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetail.controls['customerFirstName'].hasError('required')">First Name is
+                                required.</div>
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetail.controls['customerFirstName'].hasError('pattern')">First Name
+                                should only contain letters.</div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Last Name <span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="customerLastName" id="customerLastName"
+                            aria-describedby="emailHelp">
+                        <div
+                            *ngIf="customerDetail.controls['customerLastName'].errors && (customerDetail.controls['customerLastName'].dirty || customerDetail.controls['customerLastName'].touched)">
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetail.controls['customerLastName'].hasError('required')">Last Name is
+                                required.</div>
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetail.controls['customerLastName'].hasError('pattern')">Last Name should
+                                only contain letters.</div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Email <span
+                                class="text-danger">*</span></label>
+                        <input type="email" class="form-control" formControlName="email" id="email"
+                            aria-describedby="emailHelp">
+                        <div
+                            *ngIf="customerDetail.controls['email'].errors && (customerDetail.controls['email'].dirty || customerDetail.controls['email'].touched)">
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetail.controls['email'].hasError('required')">Email is required.</div>
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetail.controls['email'].hasError('invalidEmail')">Invalid email format.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">MobileNumber <span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="phone" id="phone"
+                            aria-describedby="emailHelp">
+                        <div
+                            *ngIf="customerDetail.controls['phone'].errors && (customerDetail.controls['phone'].dirty || customerDetail.controls['phone'].touched)">
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetail.controls['phone'].hasError('required')">Mobile Number is required.
+                            </div>
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetail.controls['phone'].hasError('invalidPhone')">Invalid phone number
+                                format.</div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Birth Date <span
+                                class="text-danger">*</span></label>
+                        <input type="date" class="form-control" formControlName="dob" id="dob"
+                            aria-describedby="emailHelp">
+                        <div
+                            *ngIf="customerDetail.controls['dob'].errors && (customerDetail.controls['dob'].dirty || customerDetail.controls['dob'].touched)">
+                            <div class="alert alert-danger" *ngIf="customerDetail.controls['dob'].hasError('required')">
+                                Birth Date is required.</div>
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetail.controls['dob'].hasError('invalidDOB')">Invalid date of birth.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Address <span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="address" id="address"
+                            aria-describedby="emailHelp">
+                        <div
+                            *ngIf="customerDetail.controls['address'].errors && (customerDetail.controls['address'].dirty || customerDetail.controls['address'].touched)">
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetail.controls['address'].hasError('required')">Address is required.
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">State <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="state" id="state"
+                            aria-describedby="emailHelp">
+                        <div
+                            *ngIf="customerDetail.controls['state'].errors && (customerDetail.controls['state'].dirty || customerDetail.controls['state'].touched)">
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetail.controls['state'].hasError('required')">State is required.</div>
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetail.controls['state'].hasError('pattern')">State should only contain
+                                letters.</div>
+                        </div>
+                    </div> -->
+
+                    <div class="mb-3">
+                        <label for="state" class="form-label">State <span class="text-danger">*</span></label>
+                        <select class="form-select" formControlName="state" id="state">
+                            <option value="">Select a state</option>
+                            <option *ngFor="let state of states" [value]="state">{{state}}</option>
+                        </select>
+                    </div>
+
+
+
+                     <!-- <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">City <span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="city" id="city"
+                            aria-describedby="emailHelp">
+                        <div
+                            *ngIf="customerDetail.controls['city'].errors && (customerDetail.controls['city'].dirty || customerDetail.controls['city'].touched)">
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetail.controls['city'].hasError('required')">City is required.</div>
+                            <div class="alert alert-danger" *ngIf="customerDetail.controls['city'].hasError('pattern')">
+                                City should only contain letters.</div>
+                        </div>
+                    </div>  -->
+                    <div class="mb-3">
+                        <label for="city" class="form-label">City<span class="text-danger">*</span></label>
+                        <select class="form-select" formControlName="city" id="city" aria-describedby="emailHelp">
+                            <option value="" disabled selected>Select a city</option>
+                            <!-- Hardcoded example cities, replace with dynamic data if needed -->
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Pune">Pune</option>
+                            <option value="Nagpur">Nagpur</option>
+                            <option value="Kolhapur">Kolhapur</option>
+                            <option value="Mysuru">Mysuru</option>
+                            <option value="Bangalore">Bangalore</option>
+                            <!-- Add more options as needed -->
+                        </select>
+                        <div *ngIf="customerDetail.controls['city'].errors && (customerDetail.controls['city'].dirty || customerDetail.controls['city'].touched)">
+                            <div class="alert alert-danger" *ngIf="customerDetail.controls['city'].hasError('required')">City is required.</div>
+                            <div class="alert alert-danger" *ngIf="customerDetail.controls['city'].hasError('pattern')">City should only contain letters.</div>
+                        </div>
+                    </div>
+                    
+                   
+                    
+                    
+
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">UserName <span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="userName" id="userName"
+                            aria-describedby="emailHelp">
+                        <div
+                            *ngIf="customerDetail.controls['userName'].errors && (customerDetail.controls['userName'].dirty || customerDetail.controls['userName'].touched)">
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetail.controls['userName'].hasError('required')">Username is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">PassWord <span
+                                class="text-danger">*</span></label>
+                        <input type="password" class="form-control" formControlName="passWord" id="passWord"
+                            aria-describedby="emailHelp">
+                        <div
+                            *ngIf="customerDetail.controls['passWord'].errors && (customerDetail.controls['passWord'].dirty || customerDetail.controls['passWord'].touched)">
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetail.controls['passWord'].hasError('required')">Password is required.
+                            </div>
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetail.controls['passWord'].hasError('invalidPassword')">Invalid password
+                                format.</div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div class="mb-3">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                (click)="getAllCustomer()">Close</button>
+                            <button type=" button" class="btn btn-outline-success" (click)="addCustomer()">Add
+                                Customer</button>
+                        </div>
+
+                    </div>
+                    <p>
+                        <span class="required">*</span>Required field
+                    </p>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- edit plan -->
+<div class="modal fade" id="editPlan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fs-5" id="exampleModalLabel">Edit Customer Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="customerDetailUpdate">
+
+
+                    <div class="mb-3" [style.display]="hideCustomerId ? 'none' : 'block'">
+                        <label for="exampleInputEmail1" class="form-label">Customer ID <span
+                                class="text-danger">*</span></label>
+                        <input type="number" class="form-control" formControlName="customerId" id="customerId"
+                            aria-describedby="emailHelp">
+                    </div>
+
+
+
+
+                    <!-- <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Customer ID <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" formControlName="customerId" id="customerId"
+                            aria-describedby="emailHelp">
+                    </div> -->
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">First Name <span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="customerFirstName"
+                            id="customerFirstName" aria-describedby="emailHelp">
+                        <div
+                            *ngIf="customerDetailUpdate.controls['customerFirstName'].errors && (customerDetailUpdate.controls['customerFirstName'].dirty || customerDetailUpdate.controls['customerFirstName'].touched)">
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetailUpdate.controls['customerFirstName'].hasError('required')">First
+                                Name is required.</div>
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetailUpdate.controls['customerFirstName'].hasError('pattern')">First
+                                Name should only contain letters.</div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Last Name <span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="customerLastName" id="customerLastName"
+                            aria-describedby="emailHelp">
+                        <div
+                            *ngIf="customerDetailUpdate.controls['customerLastName'].errors && (customerDetailUpdate.controls['customerLastName'].dirty || customerDetailUpdate.controls['customerLastName'].touched)">
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetailUpdate.controls['customerLastName'].hasError('required')">Last Name
+                                is required.</div>
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetailUpdate.controls['customerLastName'].hasError('pattern')">Last Name
+                                should only contain letters.</div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Email <span
+                                class="text-danger">*</span></label>
+                        <input type="email" class="form-control" formControlName="email" id="email"
+                            aria-describedby="emailHelp">
+                        <div
+                            *ngIf="customerDetailUpdate.controls['email'].errors && (customerDetailUpdate.controls['email'].dirty || customerDetailUpdate.controls['email'].touched)">
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetailUpdate.controls['email'].hasError('required')">Email is required.
+                            </div>
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetailUpdate.controls['email'].hasError('invalidEmail')">Invalid email
+                                format.</div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">MobileNumber <span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="phone" id="phone"
+                            aria-describedby="emailHelp">
+                        <div
+                            *ngIf="customerDetailUpdate.controls['phone'].errors && (customerDetailUpdate.controls['phone'].dirty || customerDetailUpdate.controls['phone'].touched)">
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetailUpdate.controls['phone'].hasError('required')">Mobile Number is
+                                required.</div>
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetailUpdate.controls['phone'].hasError('invalidPhone')">Invalid phone
+                                number format.</div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Birth Date <span class="text-danger">*</span></label>
+                        <input type="date" class="form-control" formControlName="dob" id="dob"
+                            aria-describedby="emailHelp">
+                        <div
+                            *ngIf="customerDetailUpdate.controls['dob'].errors && (customerDetailUpdate.controls['dob'].dirty || customerDetailUpdate.controls['dob'].touched)">
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetailUpdate.controls['dob'].hasError('required')">Birth Date is
+                                required.</div>
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetailUpdate.controls['dob'].hasError('invalidDOB')">Invalid date of
+                                birth.</div>
+                        </div>
+                    </div> -->
+
+
+
+                    <div class="mb-3" [style.display]="hideDob ? 'none' : 'block'">
+                        <label for="exampleInputEmail1" class="form-label">Birth Date <span
+                                class="text-danger">*</span></label>
+                        <input type="number" class="form-control" formControlName="dob" id="dob"
+                            aria-describedby="emailHelp">
+                    </div>
+
+
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Address <span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="address" id="address"
+                            aria-describedby="emailHelp">
+                        <div
+                            *ngIf="customerDetailUpdate.controls['address'].errors && (customerDetailUpdate.controls['address'].dirty || customerDetailUpdate.controls['address'].touched)">
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetailUpdate.controls['address'].hasError('required')">Address is
+                                required.</div>
+                        </div>
+                    </div>
+                    <!-- <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">State <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="state" id="state"
+                            aria-describedby="emailHelp">
+                        <div
+                            *ngIf="customerDetailUpdate.controls['state'].errors && (customerDetailUpdate.controls['state'].dirty || customerDetailUpdate.controls['state'].touched)">
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetailUpdate.controls['state'].hasError('required')">State is required.
+                            </div>
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetailUpdate.controls['state'].hasError('pattern')">State should only
+                                contain letters.</div>
+                        </div>
+                    </div> -->
+                    <div class="mb-3">
+                        <label for="state" class="form-label">State <span class="text-danger">*</span></label>
+                        <select class="form-select" formControlName="state" id="state">
+                            <option value="">Select a state</option>
+                            <option *ngFor="let state of states" [value]="state">{{state}}</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">City <span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="city" id="city"
+                            aria-describedby="emailHelp">
+                        <div
+                            *ngIf="customerDetailUpdate.controls['city'].errors && (customerDetailUpdate.controls['city'].dirty || customerDetailUpdate.controls['city'].touched)">
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetailUpdate.controls['city'].hasError('required')">City is required.
+                            </div>
+                            <div class="alert alert-danger"
+                                *ngIf="customerDetailUpdate.controls['city'].hasError('pattern')">City should only
+                                contain letters.</div>
+                        </div>
+                    </div>
+
+
+                    <!-- <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Agent Id <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" formControlName="agentId" id="agentId"
+                            aria-describedby="emailHelp" placeholder="0">
+                    </div> -->
+                    <div class="mb-3" [style.display]="hideAgentId ? 'none' : 'block'">
+                        <label for="exampleInputEmail1" class="form-label">Agent ID <span
+                                class="text-danger">*</span></label>
+                        <input type="number" class="form-control" formControlName="agentId" id="agentId"
+                            aria-describedby="emailHelp">
+                    </div>
+
+
+
+                    <div class="mb-3">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-outline-success" (click)="updateCustomer()"
+                                data-bs-dismiss="modal">Update Customer</button>
+                        </div>
+
+                    </div>
+                    <p>
+                        <span class="required">*</span>Required field
+                    </p>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,207 @@
+<app-adminheader></app-adminheader>
+<div class="container-fulid">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Insurance Claims</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addClaim"
+                    type="submit">Add Claim</button>
+            </div> -->
+        </div>
+    </nav>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Claim ID</th>
+
+                <th scope="col">Claim Date</th>
+                <th scope="col">Claim Amount</th>
+                <!-- <th scope="col">Bank Account No</th>
+                <th scope="col">Bank IFSC Code</th> -->
+                <!-- <th scope="col">Status</th>  -->
+
+                <th scope="col">Customer </th>
+                <th scope="col">Policy </th>
+
+
+                <th scope="col">Status</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let claim of claimList">
+                <td>{{claim.claimId}}</td>
+
+                <td>{{claim.claimDate | date}}</td>
+                <td>{{claim.claimAmount}}</td>
+                <!-- <td>{{claim.bankAccountNo}}</td>
+                <td>{{claim.bankIFSCCode}}</td> -->
+                <td>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" (click)="fetchCustomerDetails(policy.customerId)">View</button>
+                    </div>
+                </td>
+
+                <td>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" (click)="fetchPolicyDetails(claim.policyNo)">View
+                        </button>
+
+                    </div>
+                </td>
+                <!-- <td>
+                    <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal"
+                        (click)="editClaim(claim)" [disabled]="claim.status">Approve</button>
+                </td> -->
+
+
+
+                <!-- <td>
+                    <button *ngIf="!claim.status" type="button" class="btn btn-outline-primary me-2"
+                        data-bs-toggle="modal" (click)="editClaim(claim)">Approve
+                    </button>
+                    <p *ngIf="claim.status" class="text-success">Claimed</p>
+                </td> -->
+                <td>
+                    <div>
+                        <button *ngIf="!claim.status" type="button" class="btn btn-outline-primary me-2"
+                            data-bs-toggle="modal" (click)="editClaim(claim)">Approve
+                        </button>
+                    </div>
+                    <div>
+                        <button *ngIf="!claim.status" type="button" class="btn btn-outline-danger me-2"
+                            data-bs-toggle="modal" (click)="deleteClaim(claim)">Deny
+                        </button>
+                        <p *ngIf="claim.status" class="text-success">Claimed</p>
+                    </div>
+                </td>
+
+
+
+
+
+
+            </tr>
+        </tbody>
+    </table>
+    <!-- ADD Claim -->
+    <div class="modal fade" id="addClaim" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title fs-5" id="exampleModalLabel">Add New Claim</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="claimDetail">
+                        <div class="mb-3">
+                            <label for="claimAmount" class="form-label">Claim Amount</label>
+                            <input type="number" class="form-control" formControlName="claimAmount" id="claimAmount"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="claimDate" class="form-label">Claim Date</label>
+                            <input type="date" class="form-control" formControlName="claimDate" id="claimDate"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="bankAccountNo" class="form-label">Bank Account No</label>
+                            <input type="text" class="form-control" formControlName="bankAccountNo" id="bankAccountNo"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="bankIFSCCode" class="form-label">Bank IFSC Code</label>
+                            <input type="text" class="form-control" formControlName="bankIFSCCode" id="bankIFSCCode"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <!-- <div class="mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select" formControlName="status" id="status">
+                                <option value="true">Active</option>
+                                <option value="false">Inactive</option>
+                            </select>
+                        </div> -->
+                        <div class="mb-3">
+                            <label for="policyNo" class="form-label">Policy Number</label>
+                            <input type="number" class="form-control" formControlName="policyNo" id="policyNo"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="policyNo" class="form-label">Customer Number</label>
+                            <input type="number" class="form-control" formControlName="customerId" id="customerId"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-outline-success" (click)="addClaim()">Add
+                                Claim</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Edit Claim -->
+    <div class="modal fade" id="editClaim" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fs-5" id="exampleModalLabel">Edit Claim Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="claimDetail">
+                        <div class="mb-3">
+                            <label for="claimId" class="form-label">Claim ID</label>
+                            <input type="number" class="form-control" formControlName="claimId" id="claimId">
+                        </div>
+                        <div class="mb-3">
+                            <label for="claimAmount" class="form-label">Claim Amount</label>
+                            <input type="number" class="form-control" formControlName="claimAmount" id="claimAmount"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="claimDate" class="form-label">Claim Date</label>
+                            <input type="datetime" class="form-control" formControlName="claimDate" id="claimDate"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="bankAccountNo" class="form-label">Bank Account No</label>
+                            <input type="text" class="form-control" formControlName="bankAccountNo" id="bankAccountNo"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="bankIFSCCode" class="form-label">Bank IFSC Code</label>
+                            <input type="text" class="form-control" formControlName="bankIFSCCode" id="bankIFSCCode"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <!-- <div class="mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select" formControlName="status" id="status">
+                                <option value="true">Active</option>
+                                <option value="false">Inactive</option>
+                            </select>
+                        </div> -->
+                        <div class="mb-3">
+                            <label for="policyNo" class="form-label">Policy Number</label>
+                            <input type="number" class="form-control" formControlName="policyNo" id="policyNo"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-outline-success" (click)="updateClaim()"
+                                data-bs-dismiss="modal">Update Claim</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

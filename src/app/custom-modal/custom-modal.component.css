@@ -1,0 +1,25 @@
+/* custom-modal.component.css */
+
+/* Center the modal vertically and horizontally */
+.modal-dialog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Set the height to 100% of the viewport height */
+    margin: 0; /* Remove default margin */
+  }
+  
+  /* Center the modal content within the modal */
+  .modal-content {
+    text-align: center;
+  }
+  
+  .modal-body{
+    height: 20vh;
+  }
+  /* Optional: Add additional styling for the overlay/background */
+  .modal-backdrop {
+    opacity: 0.7; /* Adjust the background overlay opacity */
+    background-color: #000; /* Set the background color of the overlay */
+  }
+  

@@ -1,0 +1,58 @@
+/* Modal Styles */ 
+.modal-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    background-color: #007bff; 
+    color: #fff; 
+    padding: 15px; 
+} 
+ 
+.modal-title { 
+    margin: 0; 
+} 
+ 
+.modal-body { 
+    padding: 20px; 
+} 
+ 
+.agent-details h2 { 
+    font-size: 1.5em; 
+    margin-bottom: 10px; 
+} 
+ 
+.agent-details p { 
+    margin: 5px 0; 
+} 
+ 
+.customer-counts p { 
+    margin: 10px 0; 
+} 
+ 
+.modal-footer { 
+    display: flex; 
+    justify-content: flex-end; 
+    padding: 15px; 
+} 
+ 
+/* Close Button Styles */ 
+.close { 
+    color: #fff; 
+    font-size: 20px; 
+    cursor: pointer; 
+} 
+ 
+/* Animation */ 
+.fade-in { 
+    animation: fadeIn 0.5s ease-in-out; 
+} 
+ 
+@keyframes fadeIn { 
+    from { 
+        opacity: 0; 
+    } 
+ 
+    to { 
+        opacity: 1; 
+    } 
+}

@@ -1,0 +1,64 @@
+/* Style the form container */
+
+.container {
+    max-width: 600px;
+    padding: 20px;
+    background-color: #f3fdfd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
+}
+
+/* Style the form labels */
+label {
+    font-weight: bold;
+}
+
+/* Style the form inputs */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Style the submit button */
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+}
+
+button.btn-outline-success {
+    background-color: #28a745;
+    color: #fff;
+}
+
+button.btn-outline-success:hover {
+    background-color: #218838;
+}
+
+/* Optional: Style the header */
+.modal-title {
+    color: #333;
+}
+
+/* Optional: Add animation to the form */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.container {
+    animation: fadeIn 0.5s ease-in-out;
+}

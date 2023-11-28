@@ -1,0 +1,30 @@
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Policy No</th>
+            <th>Premium</th>
+            <th>Sum Assured</th>
+            <th>Issue Date</th>
+            <th>Maturity Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let policy of policies">
+            <td>{{ policy.policyNo }}</td>
+            <td>{{ policy.premium }}</td>
+            <td>{{ policy.sumAssured }}</td>
+            <td>{{ policy.issueDate }}</td>
+            <td>{{ policy.maturityDate }}</td>
+            <td>
+
+                <div class="btn-group">
+
+                    <button class="btn btn-primary" (click)="getCustomerById(policy.customerId)">View
+                        Customer</button>
+                    <button class="btn btn-primary" (click)="getSchemeDetailById(policy.schemeId)">View </button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,141 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-15">
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item" *ngFor="let scheme of planSchemes; let i=index">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            [attr.data-bs-target]="'#collapse-' + i" aria-expanded="true" aria-controls="collapseOne">
+                            {{scheme.schemeName}}
+                        </button>
+                    </h2>
+                    <div [attr.id]="'collapse-' + i" class="accordion-collapse collapse"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <ul>
+                                <li><strong>Scheme Name :</strong> {{scheme.additionalDetail.schemeImage}}</li>
+                                <li><strong>Description :</strong> {{scheme.additionalDetail.description}}</li>
+                                <li><strong>Minimum Amount :</strong> {{scheme.additionalDetail.minAmount}}</li>
+                                <li><strong>Maximum Amount :</strong> {{scheme.additionalDetail.maxAmount}}</li>
+                                <li><strong>Minimum Age :</strong> {{scheme.additionalDetail.minAge}}</li>
+                                <li><strong>Maximum Age :</strong> {{scheme.additionalDetail.maxAge}}</li>
+                                <li><strong>Minimum Term :</strong> {{scheme.additionalDetail.minTerm}}</li>
+                                <li><strong>Maximum Term :</strong> {{scheme.additionalDetail.maxTerm}}</li>
+                                <li><strong>Profit Percent :</strong> {{scheme.additionalDetail.profitPercent}}</li>
+                            </ul>
+                            <!-- "Calculate Premium" button that opens the modal -->
+                            <button class="calculate-premium" data-bs-toggle="modal" data-bs-target="#premiumModal">
+                                Calculate Premium
+                            </button>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="center-screen" id="draggableArrow">
+                <div class="arrow-animation">
+                    <img src="assets/arrow.jpg" alt="Drag me" width="200" height="200" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <!-- Premium Calculator Modal -->
+            <div class="modal fade" id="premiumModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Calculator</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <!-- Premium calculation form -->
+                                <div class="col-md-6">
+                                    <form [formGroup]="premiumCalculateForm" name="premiumCalculateForm">
+                                        <div class="col-md-12 mt-2">
+                                            <label for="schemeName">Select Scheme:</label>
+                                            <select class="menu" name="scheme" id="" formControlName="schemeName">
+                                                <option value="{{ scheme.schemeId }}"
+                                                    *ngFor="let scheme of planSchemes; let i = index">
+                                                    {{ scheme.schemeName }}
+                                                </option>
+                                            </select>
+                                            <small
+                                                *ngIf="premiumCalculateForm.get('schemeName')?.dirty && premiumCalculateForm.get('schemeName')?.hasError('required')"
+                                                class="text-danger">*</small>
+                                        </div>
+                                        <div class="col-md-12 mt-2">
+                                            <label for="premiumMode">Choose Payments Mode</label>
+                                            <select class="menu" name="premiumType" id="" formControlName="premiumMode">
+                                                <option value="Monthly">Monthly</option>
+                                                <option value="Quarterly">Quarterly</option>
+                                                <option value="Half Yearly">Half Yearly</option>
+                                                <option value="Yearly">Yearly</option>
+                                            </select>
+                                            <small
+                                                *ngIf="premiumCalculateForm.get('premiumMode')?.dirty && premiumCalculateForm.get('premiumMode')?.hasError('required')"
+                                                class="text-danger">*</small>
+                                        </div>
+                                        <div class="col-md-12 mt-2">
+                                            <label for="minTerm">Choose Min Term:</label>
+                                            <input type="number" formControlName="term" required
+                                                placeholder="Enter Term" />
+                                            <small *ngIf="premiumCalculateForm.controls['term'].hasError('required')"
+                                                class="text-danger">*</small>
+                                            <small
+                                                *ngIf="premiumCalculateForm.controls['term'].hasError('nonNegativeNumber')"
+                                                class="text-danger">Term cannot be negative.</small>
+                                            <small *ngIf="premiumCalculateForm.controls['term'].hasError('min')"
+                                                class="text-danger">Term cannot be less than 0.</small>
+                                        </div>
+                                        <div class="col-md-12 mt-2">
+                                            <label for="minTerm">Amount To Pay:</label>
+                                            <input type="number" formControlName="sumAssured" required
+                                                placeholder="Enter Amount" />
+                                            <small
+                                                *ngIf="premiumCalculateForm.controls['sumAssured'].hasError('required')"
+                                                class="text-danger">*</small>
+                                            <small
+                                                *ngIf="premiumCalculateForm.controls['sumAssured'].hasError('nonNegativeNumber')"
+                                                class="text-danger">Sum Assured cannot be negative.</small>
+                                            <small *ngIf="premiumCalculateForm.controls['sumAssured'].hasError('min')"
+                                                class="text-danger">Sum Assured cannot be less than 0.</small>
+                                        </div>
+                                        <div class="col-12 mt-2">
+                                            <button type="button" class="submit" (click)="calculatePremium()">
+                                                Calculate
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="result" *ngIf="isDisabled">
+                                        <h6>Maturity Amount: {{ MaturityAmount }}</h6>
+
+                                        <h6>Total Premium: {{ totalPremiumEMI }}</h6>
+                                        <h6>Premium Amount: {{ this.premium }}</h6>
+                                        <div class="col-12 mt-2">
+                                            <button class="submit" data-bs-dismiss="modal" (click)="buyPolicy()"
+                                                aria-label="Close">
+                                                Buy Now
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="buy-icon">
+                                        <img src="assets/buy.jpg" alt="Buy Now" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

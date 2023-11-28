@@ -1,0 +1,120 @@
+/* Styles for your modal */
+.modal-content {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Common CSS for form elements */
+.table-input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.btn-primary {
+    background-color: #33c5ff;
+    color: #fff;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: rgb(84, 127, 253);
+}
+
+.error-message {
+    color: #53b1f9;
+    font-size: 14px;
+}
+
+/* Styles for the form container */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles for the modal */
+.modal-content {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer {
+    justify-content: space-between;
+    padding: 20px;
+    border-top: 1px solid #ccc;
+}
+
+/* Icon styles */
+.fa {
+    margin-right: 10px;
+    font-size: 20px;
+    vertical-align: middle;
+}
+
+/* Styles for the payment modal */
+#paymentModal {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+#paymentModal .modal-content {
+    background-color: #fff;
+}
+
+/* Additional styles for input fields in the payment modal */
+#paymentModal .table-input {
+    border: 1px solid #aaa;
+    font-size: 16px;
+    padding: 12px;
+    border-radius: 5px;
+}
+
+#paymentModal select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+#paymentModal .modal-footer {
+    padding: 20px;
+    border-top: none;
+}

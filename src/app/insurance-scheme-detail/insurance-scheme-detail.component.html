@@ -1,0 +1,202 @@
+<div class="container-fulid">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Insurance Schemes</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addScheme"
+                    type="submit">Add Scheme</button>
+            </div>
+        </div>
+    </nav>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Scheme ID</th>
+                <th scope="col">Scheme Name</th>
+                <!-- <th scope="col">Status</th> -->
+                <th scope="col">Insurance Plan ID</th>
+                <th scope="col"> View More</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let scheme of schemeList">
+                <td>{{scheme.schemeId}}</td>
+                <td>{{scheme.schemeName}}</td>
+                <!-- <td>{{scheme.status ? 'Active' : 'Inactive'}}</td> -->
+                <td>{{scheme.planId}}</td>
+                <td>
+                    <!-- <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal"
+                        data-bs-target="#editScheme" (click)="editScheme(scheme)">Edit</button> -->
+
+
+                    <button type="button" class="btn btn-primary" routerLink="/schemeDetail">View Scheme
+                        Details</button>
+
+                    <!-- <button type="button" class="btn btn-outline-danger" (click)="deleteScheme(scheme)">Delete</button> -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+    <!-- Edit Scheme Modal -->
+    <div class="modal fade" id="editScheme" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fs-5" id="exampleModalLabel">Edit Scheme Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="schemeDetail">
+                        <div class="mb-3">
+                            <label for="schemeId" class="form-label">Scheme ID</label>
+                            <input type="text" class="form-control" formControlName="schemeId" id="schemeId">
+                        </div>
+                        <div class="mb-3">
+                            <label for="schemeName" class="form-label">Scheme Name</label>
+                            <input type="text" class="form-control" formControlName="schemeName" id="schemeName"
+                                aria-describedby="emailHelp">
+                            <div
+                                *ngIf="schemeDetail.controls['schemeName'].errors && (schemeDetail.controls['schemeName'].dirty || schemeDetail.controls['schemeName'].touched)">
+                                <div class="alert alert-danger"
+                                    *ngIf="schemeDetail.controls['schemeName'].hasError('required')">Scheme Name is
+                                    required.</div>
+                                <div class="alert alert-danger"
+                                    *ngIf="schemeDetail.controls['schemeName'].hasError('pattern')">Invalid scheme name
+                                    format.</div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="mb-3">
+                            <label for="insurancePlanId" class="form-label">Insurance Plan ID</label>
+                            <input type="text" class="form-control" formControlName="planId" id="planId">
+                            <div
+                                *ngIf="schemeDetail.controls['planId'].errors && (schemeDetail.controls['planId'].dirty || schemeDetail.controls['planId'].touched)">
+                                <div class="alert alert-danger"
+                                    *ngIf="schemeDetail.controls['planId'].hasError('required')">Insurance Plan ID is
+                                    required.</div>
+                                <div class="alert alert-danger"
+                                    *ngIf="schemeDetail.controls['planId'].hasError('nonNegativeNumber')">Insurance Plan
+                                    ID cannot be negative.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['planId'].hasError('min')">
+                                    Insurance Plan ID cannot be less than 0.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-outline-success" (click)="updateScheme()"
+                                    data-bs-dismiss="modal">Update Scheme</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add Scheme Modal -->
+    <div class="modal fade" id="addScheme" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title fs-5" id="exampleModalLabel">Add New Scheme</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="schemeDetail">
+                        <!-- <div class="mb-3">
+                            <label for="insurancePlanId" class="form-label">Insurance Plan ID</label>
+                            <input type="text" class="form-control" formControlName="planId" id="planId">
+                            <div
+                                *ngIf="schemeDetail.controls['planId'].errors && (schemeDetail.controls['planId'].dirty || schemeDetail.controls['planId'].touched)">
+                                <div class="alert alert-danger"
+                                    *ngIf="schemeDetail.controls['planId'].hasError('required')">Insurance Plan ID is
+                                    required.</div>
+                                <div class="alert alert-danger"
+                                    *ngIf="schemeDetail.controls['planId'].hasError('nonNegativeNumber')">Insurance Plan
+                                    ID cannot be negative.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['planId'].hasError('min')">
+                                    Insurance Plan ID cannot be less than 0.</div>
+                            </div>
+                        </div> -->
+
+                        <!-- just addedd -->
+
+                        <div class="mb-3">
+                            <label for="insurancePlanId" class="form-label">Insurance Plan</label>
+                            <select class="form-select" formControlName="planId" id="planId">
+                                <option [value]="" disabled>Select a Plan</option>
+                                <option *ngFor="let plan of plans" [value]="plan.planId">{{ plan.planName }}</option>
+                            </select>
+                            <div
+                                *ngIf="schemeDetail.controls['planId'].errors && (schemeDetail.controls['planId'].dirty || schemeDetail.controls['planId'].touched)">
+                                <div class="alert alert-danger"
+                                    *ngIf="schemeDetail.controls['planId'].hasError('required')">Insurance Plan is
+                                    required.</div>
+                                <div class="alert alert-danger"
+                                    *ngIf="schemeDetail.controls['planId'].hasError('nonNegativeNumber')">Insurance Plan
+                                    cannot be negative.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['planId'].hasError('min')">
+                                    Insurance Plan cannot be less than 0.</div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        <div class="mb-3">
+                            <label for="schemeName" class="form-label">Scheme Name</label>
+                            <input type="text" class="form-control" formControlName="schemeName" id="schemeName"
+                                aria-describedby="emailHelp">
+                            <div
+                                *ngIf="schemeDetail.controls['schemeName'].errors && (schemeDetail.controls['schemeName'].dirty || schemeDetail.controls['schemeName'].touched)">
+                                <div class="alert alert-danger"
+                                    *ngIf="schemeDetail.controls['schemeName'].hasError('required')">Scheme Name is
+                                    required.</div>
+                                <div class="alert alert-danger"
+                                    *ngIf="schemeDetail.controls['schemeName'].hasError('pattern')">Invalid scheme name
+                                    format.</div>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="mb-3">
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-outline-success" (click)="addScheme()">Add
+                                    Scheme</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

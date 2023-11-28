@@ -1,0 +1,216 @@
+<app-adminheader></app-adminheader>
+<div class="container-fulid">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Policy</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addPolicy"
+                    type="submit">Add Policy</button>
+            </div> -->
+        </div>
+    </nav>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Sr No</th>
+                <th scope="col">Policy Number</th>
+                <th scope="col">Issue Date</th>
+                <th scope="col">Maturity Date</th>
+                <th scope="col">Premium</th>
+                <th scope="col">Amount To Pay</th>
+                <th scope="col">Scheme</th>
+                <th scope="col">Customer</th>
+                <th scope="col">Agent</th>
+                <!-- <th scope="col">Action</th> -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let policy of policys;let i =index">
+                <td>{{calculateSRNumber(i)}}</td>
+                <td>{{policy.policyId}}</td>
+                <td>{{policy.issueDate | date}}</td>
+                <td>{{policy.maturityDate | date}}</td>
+                <td>{{policy.premium }}</td>
+                <td>{{policy.sumAssured }}</td>
+                <td>
+
+                    <div class="btn-group">
+                        <button class="btn btn-primary"
+                            (click)="getSchemeDetailById(policy.insuranceSchemeId)">View</button>
+                    </div>
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" (click)="fetchCustomerDetails(policy.customerId)">View</button>
+                    </div>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal"
+                        data-bs-target="#agentDetailsModal" (click)="fetchAgentDetails(policy.customerId)"
+                        [disabled]="!policy.agentId">
+                        View
+                    </button>
+                    <span class="text-danger" *ngIf="!policy.agentId">No Agent</span>
+                </td>
+
+                <!-- <td>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" (click)="getAgentById(policy.agentId)"
+                            [disabled]="policy.agentId === null || policy.agentId === 0">View</button>
+                    </div>
+                </td> -->
+                <!-- <td>
+                    <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal"
+                        data-bs-target="#editPolicy" (click)="editPolicy(policy)">Edit</button>
+                    <button type="button" class="btn btn-outline-danger" (click)="deletePolicy(policy)">Delete</button>
+                </td> -->
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- pagination -->
+    <div class="pagination-controls">
+        <!-- Other pagination elements -->
+        <label for="pageSizeSelect">Page Size:</label>
+        <select id="pageSizeSelect" class="form-control" (change)="onPageSizeChange($event)">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <!-- Add more options as needed -->
+        </select>
+    </div>
+
+    <nav aria-label="Page navigation example ">
+        <ul class="pagination justify-content-center">
+            <li class="page-item  text-center " *ngFor="let page of pageNumbers">
+                <a class="page-link" [ngClass]="{ active: currentPage === page }" (click)="changePage(page)">{{ page
+                    }}</a>
+            </li>
+        </ul>
+    </nav>
+    <!-- ADD Policy -->
+    <div class="modal fade" id="addPolicy" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title fs-5" id="exampleModalLabel">Add New Policy</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="policyDetail">
+                        <!-- <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Policy Number</label>
+                            <input type="hidden" class="form-control" formControlName="policyNo" id="policyNo"
+                                aria-describedby="emailHelp">
+                        </div> -->
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Issue Date</label>
+                            <input type="date" class="form-control" formControlName="issueDate" id="issueDate"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Maturity Date</label>
+                            <input type="date" class="form-control" formControlName="maturityDate" id="maturityDate"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Premium</label>
+                            <input type="number" class="form-control" formControlName="premium" id="premium"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Sum Assured</label>
+                            <input type="number" class="form-control" formControlName="sumAssured" id="sumAssured"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Scheme ID</label>
+                            <input type="number" class="form-control" formControlName="schemeId" id="schemeId"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Customer ID</label>
+                            <input type="number" class="form-control" formControlName="customerId" id="customerId"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Agent ID</label>
+                            <input type="number" class="form-control" formControlName="agentId" id="agentId"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-outline-success" (click)="addPolicy()">Add
+                                Policy</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Edit Policy -->
+    <div class="modal fade" id="editPolicy" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fs-5" id="exampleModalLabel">Edit Policy Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="policyDetail">
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Policy Number</label>
+                            <input type="number" class="form-control" formControlName="policyId"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Issue Date</label>
+                            <input type="datetime" class="form-control" formControlName="issueDate" id="issueDate"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label> for "exampleInputEmail1" class="form-label">Maturity Date</label>
+                            <input type="datetime" class="form-control" formControlName="maturityDate" id="maturityDate"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Premium</label>
+                            <input type="number" class="form-control" formControlName="premium" id="premium"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Sum Assured</label>
+                            <input type="number" class="form-control" formControlName="sumAssured" id="sumAssured"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Scheme ID</label>
+                            <input type="number" class="form-control" formControlName="schemeId" id="schemeId"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Customer ID></label>
+                            <input type="number" class="form-control" formControlName="customerId" id="customerId"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Agent ID</label>
+                            <input type="number" class="form-control" formControlName="agentId" id="agentId"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-outline-success" (click)="updatePolicy()"
+                                data-bs-dismiss="modal">Update Policy</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

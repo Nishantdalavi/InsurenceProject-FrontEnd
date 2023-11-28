@@ -1,0 +1,186 @@
+/* h1 {
+    text-align: center;
+    margin: 50px 0 !important;
+    font-family: sans-serif;
+}
+
+.accordion-item,
+.accordion-header {
+    border: none !important;
+    background-color: transparent !important;
+    padding: 0 !important;
+    margin-bottom: 20px;
+
+}
+
+.accordion-item {
+    box-shadow: 0 2px 20px 0 rgba(110, 130, 208, .18);
+}
+
+.accordion-button {
+    width: 100%;
+    height: 60px;
+    color: #000;
+    font-weight: bold;
+    text-align: left;
+    text-decoration: none;
+}
+
+.accordion-button:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+    background: none !important;
+} */
+
+/* Style the "Calculate Premium" button */
+.calculate-premium {
+    background-color: #007BFF;
+    /* Set the background color to a blue shade */
+    color: #fff;
+    /* Set text color to white */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.calculate-premium:hover {
+    background-color: #0056b3;
+    /* Darker blue on hover */
+}
+
+/* Style the "Buy Policy" button */
+/* .submit {
+    background-color: #28a745;
+   
+    color: #fff;
+  
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit:hover {
+    background-color: #1e7e34;
+   
+} */
+
+/* Style for the modal content */
+.modal-content {
+    border: 2px solid #000;
+    /* Add a border to create a calculator-like appearance */
+    border-radius: 10px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+    /* Add a subtle shadow */
+}
+
+/* Style for the form elements */
+.menu,
+input[type="number"],
+button {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Style for the result section */
+.result {
+    border-top: 2px solid #000;
+    /* Add a top border for separation */
+    padding: 10px;
+    text-align: center;
+}
+
+/* Style for buttons */
+.submit {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Style for buttons on hover */
+.submit:hover {
+    background-color: #0056b3;
+}
+
+/* Style for the calculator header */
+.modal-title {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+/* Style for the close button */
+.btn-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+/* Style for error messages */
+.text-danger {
+    color: red;
+}
+
+/* Style for labels */
+label {
+    font-weight: bold;
+}
+
+.center-screen {
+    margin-top: 80px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.arrow-animation img {
+    animation: bounce 2s infinite;
+    cursor: grab;
+}
+
+@keyframes bounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-20px);
+    }
+
+    60% {
+        transform: translateY(-10px);
+    }
+}
+
+.buy-icon {
+    text-align: center;
+    padding-top: 20px;
+}
+
+.buy-icon img {
+    width: 100px;
+    /* Adjust the size as needed */
+    height: 150px;
+}

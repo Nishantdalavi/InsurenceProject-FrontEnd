@@ -1,0 +1,377 @@
+<app-employeeheader></app-employeeheader> 
+<div class="container-fulid">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Agent</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addPlan"
+                    type="submit">Add Agent</button>
+            </div>
+        </div>
+    </nav>
+    <div class="search-container">
+        <input type="text" class="form-control search" id="searchQuery" [(ngModel)]="searchQuery" (keyup)="onSearch()"
+            placeholder="Start filtering by id or first name.." />
+
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Sr No</th>
+                <th scope="col">AgentId</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Qualification</th>
+                <th scope="col">Email</th>
+                <th scope="col">phone</th>
+                <th scope="col">Status</th>
+                <th scope="col">Edit</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let agent of agents; let i=index">
+                <td>{{calculateSRNumber(i)}}</td>
+                <td>{{agent.agentId}}</td>
+                <td>{{agent.agentFirstName}}</td>
+                <td>{{agent.agentLastName}}</td>
+                <td>{{agent.qualification}}</td>
+                <td>{{agent.email}}</td>
+                <td>{{agent.phone}}</td>
+                <td>
+                    <p [ngClass]="{'text-success': agent.status, 'text-danger': !agent.status}">
+                        {{ agent.status ? 'Active' : 'Inactive' }}
+                    </p>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal"
+                        data-bs-target="#editPlan" (click)="editAgent(agent)" [disabled]="agent.status===false">Edit</button>
+                    <button type="button" class="btn btn-outline-danger" (click)="deleteAgent(agent)">Change
+                        Status</button>
+                    <!-- <button type="button" class="btn btn-outline-danger" (click)="deleteAgent(agent)">Delete</button> -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- pagination -->
+    <div class="pagination-controls">
+        <!-- Other pagination elements -->
+        <label for="pageSizeSelect">Page Size: <span class="text-danger">*</span></label>
+        <select id="pageSizeSelect" class="form-control" (change)="onPageSizeChange($event)">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <!-- Add more options as needed -->
+        </select>
+    </div>
+
+    <nav aria-label="Page navigation example ">
+        <ul class="pagination justify-content-center">
+            <li class="page-item  text-center " *ngFor="let page of pageNumbers">
+                <a class="page-link" [ngClass]="{ active: currentPage === page }" (click)="changePage(page)">{{ page
+                    }}</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- ADD PLan -->
+    <div class="modal fade" id="addPlan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title fs-5" id="exampleModalLabel">Add New Agent</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="agentDetail">
+
+
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">First Name <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="agentFirstName" id="agentFirstName"
+                                aria-describedby="emailHelp">
+                            <div
+                                *ngIf="agentDetail.controls['agentFirstName'].errors && (agentDetail.controls['agentFirstName'].dirty || agentDetail.controls['agentFirstName'].touched)">
+                                <div class="alert alert-danger"
+                                    *ngIf="agentDetail.controls['agentFirstName'].hasError('required')">First Name is
+                                    required.</div>
+                                <div class="alert alert-danger"
+                                    *ngIf="agentDetail.controls['agentFirstName'].hasError('pattern')">First Name should
+                                    only contain letters.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Last Name <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="agentLastName" id="agentLastName"
+                                aria-describedby="emailHelp">
+                            <div
+                                *ngIf="agentDetail.controls['agentLastName'].errors && (agentDetail.controls['agentLastName'].dirty || agentDetail.controls['agentLastName'].touched)">
+                                <div class="alert alert-danger"
+                                    *ngIf="agentDetail.controls['agentLastName'].hasError('required')">Last Name is
+                                    required.</div>
+                                <div class="alert alert-danger"
+                                    *ngIf="agentDetail.controls['agentLastName'].hasError('pattern')">Last Name should
+                                    only contain letters.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Qualification <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="qualification" id="qualification"
+                                aria-describedby="emailHelp">
+                            <div
+                                *ngIf="agentDetail.controls['qualification'].errors && (agentDetail.controls['qualification'].dirty || agentDetail.controls['qualification'].touched)">
+                                <div class="alert alert-danger"
+                                    *ngIf="agentDetail.controls['qualification'].hasError('required')">Qualification is
+                                    required.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Email <span
+                                    class="text-danger">*</span></label>
+                            <input type="email" class="form-control" formControlName="email" id="email"
+                                aria-describedby="emailHelp">
+                            <div
+                                *ngIf="agentDetail.controls['email'].errors && (agentDetail.controls['email'].dirty || agentDetail.controls['email'].touched)">
+                                <div class="alert alert-danger"
+                                    *ngIf="agentDetail.controls['email'].hasError('required')">Email is required.</div>
+                                <div class="alert alert-danger"
+                                    *ngIf="agentDetail.controls['email'].hasError('invalidEmail')">Invalid email format.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Mobile Number <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="phone" id="phone"
+                                aria-describedby="emailHelp">
+                            <div
+                                *ngIf="agentDetail.controls['phone'].errors && (agentDetail.controls['phone'].dirty || agentDetail.controls['phone'].touched)">
+                                <div class="alert alert-danger"
+                                    *ngIf="agentDetail.controls['phone'].hasError('required')">Mobile Number is
+                                    required.</div>
+                                <div class="alert alert-danger"
+                                    *ngIf="agentDetail.controls['phone'].hasError('invalidPhone')">Invalid phone number
+                                    format.</div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">UserName <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="username" id="username"
+                                aria-describedby="emailHelp">
+                            <div
+                                *ngIf="agentDetail.controls['username'].errors && (agentDetail.controls['username'].dirty || agentDetail.controls['username'].touched)">
+                                <div class="alert alert-danger"
+                                    *ngIf="agentDetail.controls['username'].hasError('required')">Username is required.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Password <span
+                                    class="text-danger">*</span></label>
+                            <input type="password" class="form-control" formControlName="password" id="password"
+                                aria-describedby="emailHelp">
+                            <div
+                                *ngIf="agentDetail.controls['password'].errors && (agentDetail.controls['password'].dirty || agentDetail.controls['password'].touched)">
+                                <div class="alert alert-danger"
+                                    *ngIf="agentDetail.controls['password'].hasError('required')">Password is required.
+                                </div>
+                                <div class="alert alert-danger"
+                                    *ngIf="agentDetail.controls['password'].hasError('invalidPassword')">Invalid
+                                    password format. The password must contain at least one lowercase letter, one
+                                    uppercase letter, one digit, one special character (@, $, !, %, *, ?, or &), and be
+                                    at least 8 characters long.</div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+                        <div class="mb-3">
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-outline-success" (click)="addAgent()">Add
+                                    Agent</button>
+                            </div>
+
+                        </div>
+                        <p>
+                            <span class="required">*</span>Required field
+                        </p>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- edit plan -->
+    <div class="modal fade" id="editPlan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fs-5" id="exampleModalLabel">Edit Agent Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="agentDetailUpdate">
+                        <!-- <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Agent ID <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="agentId" id="agentId"
+                                aria-describedby="emailHelp">
+                        </div> -->
+
+                        <div class="mb-3" [style.display]="hideAgentId ? 'none' : 'block'">
+                            <label for="exampleInputEmail1" class="form-label">Agent ID <span
+                                    class="text-danger">*</span></label>
+                            <input type="number" class="form-control" formControlName="agentId" id="agentId"
+                                aria-describedby="emailHelp">
+                        </div>
+
+
+
+
+
+
+
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">First Name <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="agentFirstName" id="agentFirstName"
+                                aria-describedby="emailHelp">
+                            <div
+                                *ngIf="agentDetailUpdate.controls['agentFirstName'].errors && (agentDetailUpdate.controls['agentFirstName'].dirty || agentDetailUpdate.controls['agentFirstName'].touched)">
+                                <div class="alert alert-danger"
+                                    *ngIf="agentDetailUpdate.controls['agentFirstName'].hasError('required')">First Name
+                                    is required.</div>
+                                <div class="alert alert-danger"
+                                    *ngIf="agentDetailUpdate.controls['agentFirstName'].hasError('pattern')">First Name
+                                    should only contain letters.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Last Name <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="agentLastName" id="agentLastName"
+                                aria-describedby="emailHelp">
+                            <div
+                                *ngIf="agentDetailUpdate.controls['agentLastName'].errors && (agentDetailUpdate.controls['agentLastName'].dirty || agentDetailUpdate.controls['agentLastName'].touched)">
+                                <div class="alert alert-danger"
+                                    *ngIf="agentDetailUpdate.controls['agentLastName'].hasError('required')">Last Name
+                                    is required.</div>
+                                <div class="alert alert-danger"
+                                    *ngIf="agentDetailUpdate.controls['agentLastName'].hasError('pattern')">Last Name
+                                    should only contain letters.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Qualification <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="qualification" id="qualification"
+                                aria-describedby="emailHelp">
+                            <div
+                                *ngIf="agentDetailUpdate.controls['qualification'].errors && (agentDetailUpdate.controls['qualification'].dirty || agentDetailUpdate.controls['qualification'].touched)">
+                                <div class="alert alert-danger"
+                                    *ngIf="agentDetailUpdate.controls['qualification'].hasError('required')">
+                                    Qualification is required.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Email<span class="text-danger">*</span>
+                            </label>
+                            <input type="email" class="form-control" formControlName="email" id="email"
+                                aria-describedby="emailHelp">
+                            <div
+                                *ngIf="agentDetailUpdate.controls['email'].errors && (agentDetailUpdate.controls['email'].dirty || agentDetailUpdate.controls['email'].touched)">
+                                <div class="alert alert-danger"
+                                    *ngIf="agentDetailUpdate.controls['email'].hasError('required')">Email is required.
+                                </div>
+                                <div class="alert alert-danger"
+                                    *ngIf="agentDetailUpdate.controls['email'].hasError('invalidEmail')">Invalid email
+                                    format.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Mobile Number<span
+                                    class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="phone" id="phone"
+                                aria-describedby="emailHelp">
+                            <div
+                                *ngIf="agentDetailUpdate.controls['phone'].errors && (agentDetailUpdate.controls['phone'].dirty || agentDetailUpdate.controls['phone'].touched)">
+                                <div class="alert alert-danger"
+                                    *ngIf="agentDetailUpdate.controls['phone'].hasError('required')">Mobile Number is
+                                    required.</div>
+                                <div class="alert alert-danger"
+                                    *ngIf="agentDetailUpdate.controls['phone'].hasError('invalidPhone')">Invalid phone
+                                    number format.</div>
+                            </div>
+                        </div>
+                        <!-- <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">User ID <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="userId" id="userId"
+                                aria-describedby="emailHelp">
+                        </div> -->
+
+                        <div class="mb-3" [style.display]="hideUserId ? 'none' : 'block'">
+                            <label for="exampleInputEmail1" class="form-label">User ID <span
+                                    class="text-danger">*</span></label>
+                            <input type="number" class="form-control" formControlName="userId" id="userId"
+                                aria-describedby="emailHelp">
+                        </div>
+
+
+
+
+
+
+
+                        <!-- <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">UserName <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="username" id="username"
+                                aria-describedby="emailHelp">
+                        </div> -->
+
+                        <div class="mb-3">
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-outline-success" (click)="updateAgent()"
+                                    data-bs-dismiss="modal">Update Agent</button>
+                            </div>
+
+                        </div>
+                        <p>
+                            <span class="required">*</span>Required field
+                        </p>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+</div>

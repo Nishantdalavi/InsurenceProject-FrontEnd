@@ -1,0 +1,285 @@
+<app-agentheader></app-agentheader>
+<div class="container-fulid">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Customer</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addPlan"
+                    type="submit">Add Customer</button>
+            </div> -->
+        </div>
+        <button class="btn btn-outline-primary float-end mt-2" routerLink="/agent">Back</button>
+    </nav>
+    <div class="search-container">
+        <input type="text" class="form-control search" id="searchQuery" [(ngModel)]="searchQuery" (keyup)="onSearch()"
+            placeholder="Start filtering by id or first name.." />
+
+    </div>
+    <table class="table table-hover mt-4">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Sr No</th>
+                <th scope="col">CustomerId</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">phone</th>
+                <th scope="col">Address</th>
+                <th scope="col">state</th>
+                <th scope="col">City</th>
+
+                <!-- <th scope="col">Query count</th>
+                <th scope="col">Document Count</th>
+                <th scope="col">Policies count</th> -->
+                <!-- <th scope="col">Action</th> -->
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let customer of customerList;let i=index">
+                <td>{{calculateSRNumber(i)}}</td>
+                <td>{{customer.customerId}}</td>
+                <td>{{customer.customerFirstName}}</td>
+                <td>{{customer.customerLastName}}</td>
+                <td>{{customer.email}}</td>
+                <td>{{customer.phone}}</td>
+                <td>{{customer.address}}</td>
+                <td>{{customer.state}}</td>
+                <td>{{customer.city}}</td>
+
+                <!-- <td>{{customer.documentsCount}}</td>
+                <td>{{customer.policiesCount}}</td>
+                <td>{{customer.queryCount}}</td> -->
+
+
+
+                <!-- <td>
+                    <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal"
+                        data-bs-target="#editPlan" (click)="editCustomer(customer) ">Edit</button>
+                    <button type="button" class="btn btn-outline-danger"
+                        (click)="deleteCustomer(customer)">Delete</button>
+
+                </td> -->
+            </tr>
+        </tbody>
+    </table>
+    <div class="pagination-controls">
+        <!-- Other pagination elements -->
+        <label for="pageSizeSelect">Page Size:</label>
+        <select id="pageSizeSelect" class="form-control" (change)="onPageSizeChange($event)">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <!-- Add more options as needed -->
+        </select>
+    </div>
+
+    <nav aria-label="Page navigation example ">
+        <ul class="pagination justify-content-center">
+            <li class="page-item  text-center " *ngFor="let page of pageNumbers">
+                <a class="page-link" [ngClass]="{ active: currentPage === page }" (click)="changePage(page)">{{ page
+                    }}</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+
+
+
+<!-- ADD PLan -->
+<div class="modal fade" id="addPlan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5" id="exampleModalLabel">Add Customer</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="customerDetail">
+                    <!-- <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Customer ID <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" formControlName="customerId" id="customerId"
+                                aria-describedby="emailHelp" placeholder="0">
+                        </div> -->
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">First Name <span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="customerFirstName"
+                            id="customerFirstName" aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Last Name <span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="customerLastName" id="customerLastName"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Email <span
+                                class="text-danger">*</span></label>
+                        <input type="email" class="form-control" formControlName="email" id="email"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">MobileNumber <span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="phone" id="phone"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Address <span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="address" id="address"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">State <span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="state" id="state"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">city <span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="city" id="city"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">UserName <span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="userName" id="userName"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">PassWord <span
+                                class="text-danger">*</span></label>
+                        <input type="password" class="form-control" formControlName="passWord" id="passWord"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <!-- <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Agent Id <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" formControlName="agentId" id="agentId"
+                                aria-describedby="emailHelp" placeholder="0">
+                        </div> -->
+                    <div class="mb-3">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                (click)="getAllCustomer()">Close</button>
+                            <button type=" button" class="btn btn-outline-success" (click)="addCustomer()">Add
+                                Customer</button>
+                        </div>
+
+                    </div>
+                    <p>
+                        <span class="required">*</span>Required field
+                    </p>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- edit plan -->
+<div class="modal fade" id="editPlan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fs-5" id="exampleModalLabel">Edit Customer Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="customerDetail">
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Customer ID <span
+                                class="text-danger">*</span></label>
+                        <input type="number" class="form-control" formControlName="customerId" id="customerId"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">First Name <span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="customerFirstName"
+                            id="customerFirstName" aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Last Name <span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="customerLastName" id="customerLastName"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Email <span
+                                class="text-danger">*</span></label>
+                        <input type="email" class="form-control" formControlName="email" id="email"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">MobileNumber <span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="phone" id="phone"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Address <span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="address" id="address"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">State <span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="state" id="state"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">city <span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="city" id="city"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <!-- <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">UserName <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="userName" id="userName"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">PassWord <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" formControlName="passWord" id="passWord"
+                                aria-describedby="emailHelp">
+                        </div> -->
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Agent Id <span
+                                class="text-danger">*</span></label>
+                        <input type="number" class="form-control" formControlName="agentId" id="agentId"
+                            aria-describedby="emailHelp" placeholder="0">
+                    </div>
+
+
+
+
+                    <div class="mb-3">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-outline-success" (click)="updateCustomer()"
+                                data-bs-dismiss="modal">Update Customer</button>
+                        </div>
+
+                    </div>
+                    <p>
+                        <span class="required">*</span>Required field
+                    </p>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

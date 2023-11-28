@@ -1,0 +1,150 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<app-customerheader></app-customerheader>
+<div class="container">
+    <div class="row">
+        <div class="button-container">
+            <div>
+                <!-- Pan Card -->
+                <input type="file" #panCardInput style="display: none"
+                    (change)="onFileSelected(panCardInput.files, 'Pan Card')" accept=".pdf" />
+                <button class="btn"
+                    [ngClass]="{'btn-primary': !isPanCardFileSelected, 'btn-success': isPanCardFileSelected}"
+                    (click)="panCardInput.click()">Select Pan Card PDF</button>
+                <div class="button-gap"></div>
+
+                <!-- Use ngClass to conditionally apply a class based on the property -->
+                <button type="button" class="btn"
+                    [ngClass]="{'btn-primary': !isPanCardFileSelected, 'btn-success': isPanCardFileSelected}"
+                    [disabled]="isPanCardUploadDisabled" (click)="uploadDocument('Pan Card')">
+                    Upload Pan Card
+                </button>
+
+                <p *ngIf="isPanCardUploadDisabled">Pan Card uploaded.</p>
+            </div>
+
+
+            <div>
+                <!-- Aadhaar Card -->
+                 <input type="file" #aadhaarCardInput style="display: none"
+                    (change)="onFileSelected(aadhaarCardInput.files, 'Aadhaar Card')" accept=".pdf" /> 
+                   
+
+                <br><br>
+                <!-- Use ngClass to conditionally apply a class based on the property -->
+                <button class="btn"
+                    [ngClass]="{'btn-primary': !isAadhaarCardFileSelected, 'btn-success': isAadhaarCardFileSelected}"
+                    (click)="aadhaarCardInput.click()">Select Aadhaar Card PDF</button>
+                <br>
+                <!-- Use ngClass to conditionally apply a class based on the property -->
+                <button type="button" class="btn"
+                    [ngClass]="{'btn-primary': !isAadhaarCardFileSelected, 'btn-success': isAadhaarCardFileSelected}"
+                    [disabled]="isAadhaarCardUploadDisabled" (click)="uploadDocument('Aadhaar Card')">
+                    Upload Aadhaar Card
+                </button>
+
+                <p *ngIf="isAadhaarCardUploadDisabled">Aadhaar Card uploaded.</p>
+            </div>
+
+
+
+
+            <div>
+                <!-- Voter Card -->
+                <input type="file" #voterCardInput style="display: none"
+                    (change)="onFileSelected(voterCardInput.files, 'Bank Passbook')" accept=".pdf" />
+                <br><br>
+                <!-- Use ngClass to conditionally apply a class based on the property -->
+                <button class="btn"
+                    [ngClass]="{'btn-primary': !isVoterCardFileSelected, 'btn-success': isVoterCardFileSelected}"
+                    (click)="voterCardInput.click()">Select Bank Passbook PDF</button>
+                <br>
+                <!-- Use ngClass to conditionally apply a class based on the property -->
+                <button type="button" class="btn"
+                    [ngClass]="{'btn-primary': !isVoterCardFileSelected, 'btn-success': isVoterCardFileSelected}"
+                    [disabled]="isVoterCardUploadDisabled" (click)="uploadDocument('Bank Passbook')">
+                    Upload Passbook
+                </button>
+
+                <p *ngIf="isVoterCardUploadDisabled">Bank Passbook uploaded.</p>
+
+
+            </div>
+
+        </div>
+
+
+
+        <div class="pagination-controls ms-4 mb-3 pt-3">
+           
+            <label for="pageSizeSelect">Page Size:</label>
+            <select id="pageSizeSelect" class="form-control" (change)="onPageSizeChange($event)">
+
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+             
+            </select>
+
+        </div>
+    </div>
+    <table id="employeeTable" class="table table-light table-responsive-md table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Sr.</th>
+                <th scope="col">Document Name</th>
+                <th scope="col">Document Type</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let doc of documents; let i = index">
+                <td>
+                    {{ calculateSRNumber(i) }}
+                </td>
+                <td>
+                    {{doc.documentName}}
+                </td>
+                <td>
+                    {{doc.documentType}}
+                </td>
+                <td>
+                    <div *ngIf="!doc.status">
+                        <p>Pending</p>
+                    </div>
+                    <div *ngIf="doc.status">
+                        <p>Approved</p>
+                    </div>
+                </td>
+                <td>
+                    <button class="btn btn-primary" (click)="downloadDocument(doc)">Download</button><br>
+                    <button class="btn btn-danger" (click)="deleteDocument(doc.documentId)">Delete</button>
+                </td>
+
+
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <nav aria-label="Page navigation example ">
+        <ul class="pagination justify-content-center">
+            <li class="page-item text-center ms-1" *ngIf="currentPage > 1">
+                <a class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item text-center ms-1" *ngFor="let page of pageNumbers">
+                <a class="page-link" [ngClass]="{ active: currentPage === page }" (click)="changePage(page)">{{ page
+                    }}</a>
+            </li>
+            <li class="page-item text-center ms-1" *ngIf="currentPage < pageNumbers.length">
+                <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

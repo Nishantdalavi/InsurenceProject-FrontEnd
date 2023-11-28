@@ -1,0 +1,85 @@
+<!-- <mat-card class="mat-card">
+    <mat-card-content>
+        <p><strong>Customer Id:</strong> {{ data.customerId }}</p>
+        <p><strong>First Name:</strong> {{ data.customerFirstName }}</p>
+        <p><strong>Last Name:</strong> {{ data.customerLastName }}</p>
+        <p><strong>Phone:</strong>{{data.phone}}</p>
+        <p><strong>State:</strong>{{data.state}}</p>
+    </mat-card-content>
+</mat-card> -->
+<mat-card class="mat-card">
+
+    <mat-card-content>
+        <h1>Profile</h1>
+        <hr>
+
+        <form (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <label for="customerId">Customer ID: <span class="text-danger">*</span></label>
+                    <input type="text" id="customerId" [(ngModel)]="customerId" name="customerId" class="form-control"
+                        disabled>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <label for="customerFirstName">First Name: <span class="text-danger">*</span></label>
+                    <input type="text" id="customerFirstName" [(ngModel)]="customerFirstName" name="customerFirstName"
+                        class="form-control" disabled>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-4">
+                    <label for="customerLastName">Last Name: <span class="text-danger">*</span></label>
+                    <input type="text" id="customerLastName" [(ngModel)]="customerLastName" name="customerLastName"
+                        class="form-control">
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <label for="email">Email: <span class="text-danger">*</span></label>
+                    <input type="text" id="email" [(ngModel)]="email" name="email" class="form-control">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <label for="phone">Phone: <span class="text-danger">*</span></label>
+                    <input type="text" id="phone" [(ngModel)]="phone" name="phone" class="form-control">
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label for="dob">Date Of Birth: <span class="text-danger">*</span></label>
+                    <input type="datetime" id="phone" [(ngModel)]="dob" name="dob" class="form-control">
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-4">
+                    <label for="address">Address: <span class="text-danger">*</span></label>
+                    <input type="text" id="address" [(ngModel)]="address" name="address" class="form-control">
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <label for="state">State: <span class="text-danger">*</span></label>
+                    <input type="text" id="state" [(ngModel)]="state" name="state" class="form-control">
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-6 mb-4">
+                    <label for="city">City: <span class="text-danger">*</span></label>
+                    <input type="text" id="city" [(ngModel)]="city" name="city" class="form-control">
+                </div>
+            </div>
+            <div class="but" style="margin-left: 350px;">
+
+                <div class="col-md-8 mb-10">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+
+            </div>
+
+        </form>
+    </mat-card-content>
+</mat-card>

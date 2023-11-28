@@ -1,0 +1,237 @@
+<section style="background-color: #009FBD">
+    <br>
+    <br>
+   
+    <div class="container">
+        <h3 class="modal-title fs-5">Registation form</h3>
+
+        <form [formGroup]="customerDetail">
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <label for="exampleInputEmail1" class="form-label">First Name<span
+                            class="text-danger">*</span></label>
+                    <input type="text" class="form-control" formControlName="customerFirstName" id="customerFirstName"
+                        aria-describedby="emailHelp">
+                    <div
+                        *ngIf="customerDetail.controls['customerFirstName'].errors && (customerDetail.controls['customerFirstName'].dirty || customerDetail.controls['customerFirstName'].touched)">
+                        <div class="alert alert-danger"
+                            *ngIf="customerDetail.controls['customerFirstName'].hasError('required')">First Name is
+                            required.
+                        </div>
+                        <div class="alert alert-danger"
+                            *ngIf="customerDetail.controls['customerFirstName'].hasError('pattern')">First Name should
+                            only
+                            contain letters.</div>
+                    </div>
+
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label for="exampleInputEmail1" class="form-label">Last Name<span
+                            class="text-danger">*</span></label>
+                    <input type="text" class="form-control" formControlName="customerLastName" id="customerLastName"
+                        aria-describedby="emailHelp">
+                    <div
+                        *ngIf="customerDetail.controls['customerLastName'].errors && (customerDetail.controls['customerLastName'].dirty || customerDetail.controls['customerLastName'].touched)">
+                        <div class="alert alert-danger"
+                            *ngIf="customerDetail.controls['customerLastName'].hasError('required')">Last Name is
+                            required.
+                        </div>
+                        <div class="alert alert-danger"
+                            *ngIf="customerDetail.controls['customerLastName'].hasError('pattern')">
+                            Last Name should only contain letters.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-6 mb-4">
+                    <label for="exampleInputEmail1" class="form-label">Email<span class="text-danger">*</span></label>
+                    <input type="email" class="form-control" formControlName="email" id="email"
+                        aria-describedby="emailHelp">
+                    <div
+                        *ngIf="customerDetail.controls['email'].errors && (customerDetail.controls['email'].dirty || customerDetail.controls['email'].touched)">
+                        <div class="alert alert-danger" *ngIf="customerDetail.controls['email'].hasError('required')">
+                            Email
+                            is
+                            required.</div>
+                        <div class="alert alert-danger"
+                            *ngIf="customerDetail.controls['email'].hasError('invalidEmail')">
+                            Invalid email format.</div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label for="exampleInputEmail1" class="form-label">MobileNumber<span
+                            class="text-danger">*</span></label>
+                    <input type="text" class="form-control" formControlName="phone" id="phone"
+                        aria-describedby="emailHelp">
+                    <div
+                        *ngIf="customerDetail.controls['phone'].errors && (customerDetail.controls['phone'].dirty || customerDetail.controls['phone'].touched)">
+                        <div class="alert alert-danger" *ngIf="customerDetail.controls['phone'].hasError('required')">
+                            Mobile
+                            Number is required.</div>
+                        <div class="alert alert-danger"
+                            *ngIf="customerDetail.controls['phone'].hasError('invalidPhone')">
+                            Invalid phone number format.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <label for="exampleInputEmail1" class="form-label">Birth Date<span
+                            class="text-danger">*</span></label>
+                    <input type="date" class="form-control" formControlName="dob" id="dob" aria-describedby="emailHelp">
+                    <div
+                        *ngIf="customerDetail.controls['dob'].errors && (customerDetail.controls['dob'].dirty || customerDetail.controls['dob'].touched)">
+                        <div class="alert alert-danger" *ngIf="customerDetail.controls['dob'].hasError('required')">
+                            Birth
+                            Date
+                            is required.</div>
+                        <div class="alert alert-danger" *ngIf="customerDetail.controls['dob'].hasError('invalidDOB')">
+                            Invalid
+                            date of birth.</div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <label for="exampleInputEmail1" class="form-label">Address<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" formControlName="address" id="address"
+                        aria-describedby="emailHelp">
+                    <div
+                        *ngIf="customerDetail.controls['address'].errors && (customerDetail.controls['address'].dirty || customerDetail.controls['address'].touched)">
+                        <div class="alert alert-danger" *ngIf="customerDetail.controls['address'].hasError('required')">
+                            Address
+                            is required.</div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">State</label>
+            <input type="text" class="form-control" formControlName="state" id="state" aria-describedby="emailHelp">
+            <div
+                *ngIf="customerDetail.controls['state'].errors && (customerDetail.controls['state'].dirty || customerDetail.controls['state'].touched)">
+                <div class="alert alert-danger" *ngIf="customerDetail.controls['state'].hasError('required')">State is
+                    required.</div>
+                <div class="alert alert-danger" *ngIf="customerDetail.controls['state'].hasError('pattern')">State
+                    should only contain letters.</div>
+            </div>
+        </div> -->
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <label for="state" class="form-label">State<span class="text-danger">*</span></label>
+                    <select class="form-select" formControlName="state" id="state" aria-describedby="emailHelp">
+                        <option value="" disabled selected>Select a state</option>
+
+                        <option value="MH">Maharashtra</option>
+                        <option value="KA"> Karnataka</option>
+                        <option value="MP">Madhya Pradesh</option>
+                        <option value="GJ">Gujarat </option>
+
+
+                    </select>
+                    <div
+                        *ngIf="customerDetail.controls['state'].errors && (customerDetail.controls['state'].dirty || customerDetail.controls['state'].touched)">
+                        <div class="alert alert-danger" *ngIf="customerDetail.controls['state'].hasError('required')">
+                            State
+                            is
+                            required.</div>
+                        <div class="alert alert-danger" *ngIf="customerDetail.controls['state'].hasError('pattern')">
+                            State
+                            should only contain letters.</div>
+                    </div>
+                </div>
+            
+
+
+            <!-- <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">City</label>
+            <input type="text" class="form-control" formControlName="city" id="city" aria-describedby="emailHelp">
+            <div
+                *ngIf="customerDetail.controls['city'].errors && (customerDetail.controls['city'].dirty || customerDetail.controls['city'].touched)">
+                <div class="alert alert-danger" *ngIf="customerDetail.controls['city'].hasError('required')">City is
+                    required.</div>
+                <div class="alert alert-danger" *ngIf="customerDetail.controls['city'].hasError('pattern')">City should
+                    only contain letters.</div>
+            </div>
+        </div>  -->
+            
+
+                <div class="col-md-6 mb-4">
+                    <label for="city" class="form-label">City<span class="text-danger">*</span></label>
+                    <select class="form-select" formControlName="city" id="city" aria-describedby="emailHelp">
+                        <option value="" disabled selected>Select a city</option>
+                        <!-- Hardcoded example cities, replace with dynamic data if needed -->
+                        <option value="Mumbai">Mumbai</option>
+                        <option value="Pune">Pune</option>
+                        <option value="Nagpur">Nagpur</option>
+                        <option value="Kolhapur">Kolhapur</option>
+                        <option value="Mysuru">Mysuru</option>
+                        <option value="Bangalore">Bangalore</option>
+                        <!-- Add more options as needed -->
+                    </select>
+                    <div
+                        *ngIf="customerDetail.controls['city'].errors && (customerDetail.controls['city'].dirty || customerDetail.controls['city'].touched)">
+                        <div class="alert alert-danger" *ngIf="customerDetail.controls['city'].hasError('required')">
+                            City is
+                            required.</div>
+                        <div class="alert alert-danger" *ngIf="customerDetail.controls['city'].hasError('pattern')">City
+                            should
+                            only contain letters.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+
+                <div class="col-md-6 mb-4">
+                    <label for="exampleInputEmail1" class="form-label">UserName<span
+                            class="text-danger">*</span></label>
+                    <input type="text" class="form-control" formControlName="userName" id="userName"
+                        aria-describedby="emailHelp">
+                    <div
+                        *ngIf="customerDetail.controls['userName'].errors && (customerDetail.controls['userName'].dirty || customerDetail.controls['userName'].touched)">
+                        <div class="alert alert-danger"
+                            *ngIf="customerDetail.controls['userName'].hasError('required')">
+                            Username is required.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <label for="passWord" class="form-label">Password<span class="text-danger">*</span></label>
+                <input type="password" class="form-control" formControlName="passWord" id="passWord" aria-describedby="emailHelp">
+                <div *ngIf="customerDetail.controls['passWord'].errors && (customerDetail.controls['passWord'].dirty || customerDetail.controls['passWord'].touched)">
+                  <div class="alert alert-danger" *ngIf="customerDetail.controls['passWord'].hasError('required')">
+                    Password is required.
+                  </div>
+                  <div class="alert alert-danger" *ngIf="customerDetail.controls['passWord'].hasError('invalidPassword')">
+                    Invalid password format.
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 mb-4">
+                <!-- ... your other password field markup ... -->
+                <div *ngIf="customerDetail.controls['passWord'].errors && (customerDetail.controls['passWord'].dirty || customerDetail.controls['passWord'].touched)">
+                  <!-- ... your other error messages ... -->
+                </div>
+              </div>
+              <div class="col-md-6 mb-4">
+                <label for="conformpassWord" class="form-label">Confirm Password<span class="text-danger">*</span></label>
+                <input type="password" class="form-control" formControlName="conformpassWord" id="conformpassWord" aria-describedby="emailHelp">
+                <div *ngIf="customerDetail.controls['conformpassWord'].errors && (customerDetail.controls['conformpassWord'].dirty || customerDetail.controls['conformpassWord'].touched)">
+                  <div class="alert alert-danger" *ngIf="customerDetail.controls['conformpassWord'].hasError('required')">
+                    Password is required.
+                  </div>
+                  <div class="alert alert-danger" *ngIf="customerDetail.hasError('passwordMismatch') && customerDetail.controls['conformpassWord'].dirty">
+                    Passwords do not match.
+                  </div>
+                </div>
+              </div>
+            <p>
+                <span class="required">*</span>Required field
+            </p>
+
+            <button type="button" class="btn btn-outline-success" (click)="addCustomer()">Add
+                Customer</button>
+        </form>
+    </div>
+    <br>
+    <br>
+</section>

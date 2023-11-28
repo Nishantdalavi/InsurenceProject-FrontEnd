@@ -1,0 +1,217 @@
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    /* Adjust as needed based on your design */
+}
+
+.card {
+    flex: 0 1 calc(30% - 10px);
+    /* Adjust the width to fit three cards in a row */
+    margin-bottom: 20px;
+    /* Adjust the margin between cards */
+    padding: 20px;
+    border: 1px solid #ccc;
+    /* Add border for a visual separation */
+    box-sizing: border-box;
+    text-align: center;
+    background-color: #f0f0f0;
+    /* Decent background color, adjust as needed */
+}
+
+.card .icon {
+    font-size: 24px;
+    /* Adjust icon size */
+}
+
+.card .title {
+    font-size: 16px;
+    /* Adjust title font size */
+    margin-top: 10px;
+    /* Adjust the spacing between icon and title */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: #ffffff;
+   
+}
+
+.navbar-toggler {
+    border: none;
+    background: transparent;
+}
+
+.navbar-toggler i {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.navbar-nav .nav-item {
+    margin-right: 1rem;
+}
+
+.navbar-nav .nav-link {
+    color: #333;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #ff6600;
+}
+
+.btn-primary {
+    background-color: #00d9ff;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #e64900;
+}
+
+.card {
+    transition: transform 0.3s ease;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.card i {
+    font-size: 2rem;
+    color: #ff6600;
+    margin-bottom: 1rem;
+}
+
+.no-bullets {
+    list-style-type: none;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+    padding-top: 20px;
+}
+
+.profile-icon {
+    margin-right: auto;
+}
+
+/* Style for the modal */
+.modal-body {
+    text-align: center;
+    font-size: 18px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #3494e6, #ec6ead);
+    overflow: hidden;
+    animation: gradientAnimation 10s ease infinite;
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Navbar */
+.navbar {
+    background: linear-gradient(135deg, #6bfff8, #7aefff);
+    height: 100px;
+}
+.navbar-expand-lg .navbar-collapse{
+    width: 100px;
+    height: 100px;
+    margin-bottom: 30px;
+}
+
+.navbar-toggler {
+    
+    background: #fff;
+    color: #ff6b6b;
+}
+
+.nav-link {
+    color: #fff;
+}
+
+.nav-link:hover {
+    color: #ff4c4c;
+}
+
+.btn-primary {
+    background-color: #ff6b6b;
+    color: #fff;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+    background-color: #ff4c4c;
+}
+
+/* Cards */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.card-body {
+    text-align: center;
+    padding: 2rem;
+}
+
+.card-title {
+    color: #ff6b6b;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.card i {
+    font-size: 48px;
+    color: #ff6b6b;
+}

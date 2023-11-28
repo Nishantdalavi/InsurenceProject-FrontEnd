@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h4 class="modal-title">Insurance Scheme Details</h4>
+    <button type="button" class="close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="scheme-details">
+        <h2>{{ insuranceScheme?.schemeName }}</h2>
+        <p>Scheme ID: {{ insuranceScheme?.schemeId }}</p>
+        <p>Status: {{ insuranceScheme?.status ? 'Active' : 'Inactive' }}</p>
+        <p>Plan ID: {{ insuranceScheme?.planId }}</p>
+    </div>
+    <div class="scheme-detail">
+        <h2>Scheme Detail</h2>
+        <p>Detail ID: {{ schemeDetail?.detailId }}</p>
+        <img src="{{ schemeDetail?.schemeImage }}" alt="Scheme Image" class="scheme-image">
+        <p>Description: {{ schemeDetail?.description }}</p>
+        <p>Min Amount: {{ schemeDetail?.minAmount }}</p>
+        <p>Max Amount: {{ schemeDetail?.maxAmount }}</p>
+        <p>Min Age: {{ schemeDetail?.minAge }}</p>
+        <p>Max Age: {{ schemeDetail?.maxAge }}</p>
+        <p>Min Term: {{ schemeDetail?.minTerm }}</p>
+        <p>Max Term: {{ schemeDetail?.maxTerm }}</p>
+        <p>Profit Percent: {{ schemeDetail?.profitPercent }}</p>
+        <p>First Premium Commission Percent: {{ schemeDetail?.firstPremiumCommissionPercent }}</p>
+        <p>EMI Commission Percent: {{ schemeDetail?.emiCommissionPercent }}</p>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Close</button>
+</div>

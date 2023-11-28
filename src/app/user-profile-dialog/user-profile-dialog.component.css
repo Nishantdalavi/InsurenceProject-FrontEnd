@@ -1,0 +1,69 @@
+/* .mat-card {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    overflow: hidden;
+    background: linear-gradient(135deg, #FF9A8B, #FF6B6B);
+    color: #fff;
+}
+
+.mat-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    background: linear-gradient(135deg, #76B39D, #5C80A1);
+}
+
+.mat-card-content {
+    padding: 1.5rem;
+}
+
+button {
+    background-color: #FF6B6B;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+    background-color: #FF4C4C;
+} */
+
+.mat-card {
+    max-height: 400px;
+    /* Define a maximum height for scrolling */
+    overflow: auto;
+    /* Enable vertical scrolling if the content overflows */
+}
+
+.form-group {
+    margin-bottom: 20px;
+    /* Add some spacing between form groups */
+}
+
+.form-control {
+    width: 100%;
+    /* Make the text input fields expand to the full width of their container */
+}
+
+.mat-card {
+    max-height: 400px;
+    /* Define a maximum height for scrolling */
+    width: 500px;
+    /* Set the width of the card */
+    overflow: auto;
+    /* Enable vertical scrolling if the content overflows */
+}
+
+.form-group {
+    margin-bottom: 20px;
+    /* Add some spacing between form groups */
+}
+
+.form-control {
+    width: 100%;
+    /* Make the text input fields expand to the full width of their container */
+}

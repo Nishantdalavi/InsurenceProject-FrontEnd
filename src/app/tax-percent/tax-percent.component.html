@@ -1,0 +1,63 @@
+<app-adminheader></app-adminheader>
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Tax</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Tax Table -->
+     <table class="table table-hover mt-4">
+        <thead class="bg-primary text-white">
+            <tr>
+                <th scope="col">Tax Percent</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let tax of taxList">
+                <td>{{ tax.taxPercent }}</td>
+                <td>
+                    <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal"
+                        data-bs-target="#editTax" (click)="editTax(tax)">Edit</button>
+                </td>
+            </tr>
+        </tbody>
+    </table> 
+   
+    <!-- Edit Tax Modal -->
+    <div class="modal fade" id="editTax" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fs-5" id="exampleModalLabel">Edit Tax Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="taxDetail">
+                        <div class="mb-3">
+                            <label for="taxPercent" class="form-label">Tax Percent</label>
+                            <input type="number" class="form-control" formControlName="taxPercent" id="taxPercent"
+                                aria-describedby="taxPercentHelp" required>
+                        </div>
+                        <div class="mb-3">
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-outline-success" (click)="updateTax()"
+                                    data-bs-dismiss="modal">Update Tax</button>
+                            </div>
+                        </div>
+                        <p>
+                            <span class="required">*</span>Required field
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

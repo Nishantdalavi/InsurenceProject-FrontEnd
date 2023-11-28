@@ -1,0 +1,447 @@
+<!-- <div class="container" class="text-center mt-3">
+    <div class="container">
+        <h5 class="mt-3">Customer Details</h5>
+        <table class="table table-hover table-responsive-md table-light mt-3">
+            <thead>
+                <tr>
+                    <th>Customer Name</th>
+                    <th>DOB</th>
+                    <th>Email</th>
+                    <th>Mobile No</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        {{ customerData.customerFirstName }}
+                        {{ customerData.customerLastName }}
+                    </td>
+                    <td>
+                        {{ customerData.dob | date : "dd-MM-YYYY" }}
+                    </td>
+                    <td>
+                        {{ customerData.email }}
+                    </td>
+                    <td>
+                        {{ customerData.phone }}
+                    </td>
+                    <td>
+                        {{ customerData.address }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container mt-3">
+        <h5 class="mt-3">Policy Details</h5>
+        <table class="table table-hover table-responsive-md table-light mt-3">
+            <thead>
+                <tr>
+                    <th>Policy Number</th>
+
+                    <th>Scheme Name</th>
+                    <th>Issue Date</th>
+                    <th>Maturity Date</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        {{ policy.policyNo }}
+                    </td>
+                    <td>
+                        {{ schemeData.schemeName }}
+                    </td>
+                    <td>
+                        {{ policy.issueDate | date : "dd-MM-YYYY" }}
+                    </td>
+                    <td>
+                        {{ policy.maturityDate | date : "dd-MM-YYYY" }}
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container mt-3">
+        <h5 class="mt-3">Premium Details</h5>
+        <table class="table table-hover table-responsive-md table-light mt-3">
+            <thead>
+                <tr>
+                    <th>Premium Amount</th>
+
+                    <th>Sum Assured</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        {{ policy.premium }}
+                    </td>
+
+                    <td>
+                        {{ policy.sumAssured }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container mt-3">
+        <h5 class="mt-3">Payment Details</h5>
+        <table class="table table-hover table-responsive-md table-light mt-3">
+            <thead>
+                <tr>
+                    <th>Installment Number</th>
+                    <th>Installment Amount</th>
+                    <th>Due Date</th>
+                    <th>Action</th>
+                    <th>Download</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let emi of installment; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ policy.premium }}</td>
+                    <td>{{ calculateDueDate(i) | date : "dd-MM-YYYY" }}</td>
+                    <td>
+                        <div *ngIf="!emi.isPaid">
+                            <button class="btn btn-primary" (click)="PayPremium()">Pay Premium</button>
+                        </div>
+                        <div *ngIf="emi.isPaid">
+                            <p>Paid</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="emi.isPaid">
+                            <button class="btn btn-success">Reciept</button>
+                        </div>
+                        <div *ngIf="!emi.isPaid"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div> -->
+
+
+<!--  modlllll -->
+
+<!-- <div class="modal fade" id="payfirstPremiumModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Enter Card Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <tr>
+                        <td>Premium:</td>
+                        <td>{{ policy.premium }}</td>
+                    </tr>
+                    <tr>
+                        <td>Tax Percent:</td>
+                        {{ tax.taxPercent }}%
+                    </tr>
+                    <tr>
+                        <td>Total Amount:</td>
+                        ₹{{ calculateTotalAmoutToPay() }}
+                    </tr>
+                    <hr />
+                    <tr>
+                        <td>Enter Card Details:</td>
+                    </tr>
+                </table>
+
+                <form [formGroup]="payPremiumForm">
+                    <div class="row">
+                        <div class="col">Payment Type*</div>
+                        <div class="col">
+                            <select class="menu" formControlName="paymentType" placeholder="Payment Type*"
+                                aria-label="Payment Type">
+                                <option value="0">Debit Card</option>
+                                <option value="1">Credit Card</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col label">Card Holder Name*</div>
+                        <div class="col">
+                            <input type="text" class="input" formControlName="cardHolderName"
+                                placeholder="Card Holder Name" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col label">Card Number*</div>
+                        <div class="col">
+                            <input type="number" class="input" formControlName="cardNumber" placeholder="Card Number" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col label">CVV*</div>
+                        <div class="col">
+                            <input type="number" class="input" formControlName="cvv" placeholder="CVV*" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col label">Expiry Date*</div>
+                        <div class="col">
+                            <input type="date" class="input" formControlName="expiryDate" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button id="save" type="button" class="btn btn-primary">Pay</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+<div class="wrapper">
+    <!-- <div class="container" class="text-center mt-3">
+        <div class="container">
+            <table class="table table-hover table-responsive-md table-light mt-3">
+                <thead>
+                    <tr class="text-center">
+                        <th colspan="12">CUSTOMER DETAILS</th>
+                    </tr>
+                    <tr class="text-center">
+                        <th>Customer Name</th>
+                        <th>DOB</th>
+                        <th>Email</th>
+                        <th>Mobile No</th>
+                        <th>Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="text-center">
+                        <td>
+                            {{ customerData.customerFirstName }}
+                            {{ customerData.customerLastName }}
+                        </td>
+                        <td>
+                            {{ customerData.dOb | date : "dd-MM-YYYY" }}
+                        </td>
+                        <td>
+                            {{ customerData.email }}
+                        </td>
+                        <td>
+                            {{ customerData.phone }}
+                        </td>
+                        <td>
+                            {{ customerData.address }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="container mt-3">
+            <table class="table table-hover table-responsive-md table-light mt-3">
+                <thead>
+                    <tr class="text-center">
+                        <th colspan="12">POLICY DETAILS</th>
+                    </tr>
+                    <tr class="text-center">
+                        <th>Policy Numebr</th>
+
+                        <th>Scheme Name</th>
+                        <th>Issue Date</th>
+                        <th>Maturity Date</th>
+                        <th>Premium Mode</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="text-center">
+                        <td>
+                            {{ policy.policyNo }}
+                        </td>
+                        <td>
+                            {{ schemeData.schemeName }}
+                        </td>
+                        <td>
+                            {{ policy.issueDate | date : "dd-MM-YYYY" }}
+                        </td>
+                        <td>
+                            {{ policy.maturityDate | date : "dd-MM-YYYY" }}
+                        </td>
+                        <td>
+                            {{ policy.premiumMode }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> -->
+    <!-- <div class="container mt-3">
+        <table class="table table-hover table-responsive-md table-light mt-3">
+            <thead>
+                <tr class="text-center">
+                    <th colspan="12">PREIMUM DETAILS</th>
+                </tr>
+                <tr class="text-center">
+                    <th>Premium Amount</th>
+                    <th>Profit Ratio</th>
+                    <th>Sum Assured</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="text-center">
+                    <td>
+                        <span style="font-family: 'RupeeFont';">₹</span>
+                        {{ policy.premium }}
+                    </td>
+                    <td>
+                        {{ policy.profitPercent }}
+                    </td>
+                    <td>
+                        <span style="font-family: 'RupeeFont';">₹</span>
+                        {{ policy.sumAssured }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div> -->
+    <div class="container mt-3">
+        <table class="table table-hover table-responsive-md table-light mt-3">
+            <thead>
+
+                <tr class="text-center">
+                    <th>Installment Number</th>
+                    <th>Installment Amount</th>
+                    <th>Due Date</th>
+                    <th>Action</th>
+                    <!-- <th>Download</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="text-center" *ngFor="let emi of installment; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td><span style="font-family: 'RupeeFont';">₹</span>
+                        {{ policy.premium }}</td>
+                    <td>{{ calculateDueDate(i) | date : "dd-MM-YYYY" }}</td>
+                    <td>
+                        <div *ngIf="i == policy.paymentCount">
+                            <button class="btn btn-primary" (click)="showPaymentModal(i)">
+                                Pay Premium
+                            </button>
+                        </div>
+                        <div *ngIf="i < policy.paymentCount">
+                            <h6>Paid</h6>
+                        </div>
+                        <div *ngIf="i > policy.paymentCount">
+                            <button class="btn btn-secondary">Pay Premium</button>
+                        </div>
+                    </td>
+                    <!-- <td> -->
+                    <!-- <div *ngIf="i < policy.paymentCount">
+                            <button class="btn btn-success" (click)="downloadReceipt(i)">
+                                Reciept
+                            </button>
+                        </div>
+                        <div *ngIf="i >= policy.paymentCount">--</div> -->
+                    <!-- </td> -->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container mt-3 mb-3">
+        <button class="btn submit" [disabled]="numberOfInstallments !== policy.paymentCount" (click)="claimPolicy()">
+            Claim Policy
+        </button>
+    </div>
+
+</div>
+
+<!-- Paypremium modal -->
+<div class="container">
+    <div class="modal fade" id="emiPaymentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: aqua;">
+                    <h5 class="modal-title" id="exampleModalLabel">Enter Card Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table" style="border: 3px solid black;">
+                        <tr>
+                            <td>Premium:</td>
+                            <td><span style="font-family: 'RupeeFont';">₹</span>
+                                {{ policy.premium }}</td>
+                        </tr>
+                        <tr>
+                            <td>Tax Percent:</td>
+                            <td>{{ Tax.taxPercent}}&#37;</td>
+                        </tr>
+                        <tr>
+                            <td>Total Amount:</td>
+                            <td>&#8377;{{ calculateTotalAmoutToPay() }}</td>
+                        </tr>
+                        </table>
+                        <hr style="color: red;">
+                        <table style="border: 3px solid black; width: 446px;"><br>
+                            
+
+                            <div class="container">
+                                <form [formGroup]="PaymentForm">
+                                    <div class="row">
+                                        <div class="col">Payment Type*</div>
+                                        <div class="col">
+                                            <select class="menu" formControlName="payType">
+                                                <option value="0">Debit Card</option>
+                                                <option value="1">Credit Card</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col">Card HolderName*</div>
+                                        <div class="col">
+                                            <input class="input" type="text" placeholder="Card Holder Name"
+                                                formControlName="cName" />
+                                        </div>
+                                    </div>
+                                    <hr>
+
+                                    <div class="row">
+                                        <div class="col">Card Number*</div>
+                                        <div class="col">
+                                            <input class="input" type="number" formControlName="cNumber"
+                                                placeholder="Card Number" />
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col">CVV*</div>
+                                        <div class="col">
+                                            <input class="input" formControlName="cvv" type="text" placeholder="CVV " />
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col">Expiry Date*</div>
+                                        <div class="col">
+                                            <input class="input" formControlName="DateOfExpiry" type="date" />
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                            <br>
+                        </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                    <button id="save" type="button" class="btn btn-primary" (click)="PayPremium()">
+                        Pay
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <h4 class="modal-title">Policy Details</h4>
+    <button type="button" class="close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="policy-details">
+        <h2>Policy Number: {{ policy?.policyNo }}</h2>
+        <p>Issue Date: {{ policy?.issueDate | date }}</p>
+        <p>Maturity Date: {{ policy?.maturityDate | date }}</p>
+        <!-- <p>Premium Mode: {{ policy?.premiumMode }}</p> -->
+        <p>Premium: {{ policy?.premium }}</p>
+        <!-- <p>Total Premium Number: {{ policy?.totalPremiumNo }}</p> -->
+        <!-- <p>Sum Assured: {{ policy?.sumAssured }}</p> -->
+        <p>Status: {{ policy?.status ? 'Active' : 'Inactive' }}</p>
+        <p>Customer ID: {{ policy?.customerId }}</p>
+        <p *ngIf="policy?.agentId">Agent ID: {{ policy?.agentId }}</p>
+        <!-- <p>Scheme ID: {{ policy?.schemeId }}</p> -->
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Close</button>
+</div>

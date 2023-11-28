@@ -1,0 +1,157 @@
+<app-customerheader></app-customerheader>
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Query</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addComplaint"
+                    type="submit">Add Query</button>
+            </div>
+        </div>
+    </nav>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Complaint ID</th>
+
+                <th scope="col">Title</th>
+                <th scope="col">Message</th>
+                <th scope="col">Contact Date</th>
+                <th scope="col">Reply</th>
+                <!-- <th scope="col">Customer ID</th> -->
+                <!-- <th scope="col">Action</th> -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let complaint of complaintList">
+                <td>{{complaint.complaintId}}</td>
+
+                <td>{{complaint.complaintName}}</td>
+                <td>{{complaint.complaintMessage}}</td>
+                <td>{{complaint.dateOfComplaint | date}}</td>
+                <td>{{complaint.reply}}</td>
+                <!-- <td>{{complaint.customerId}}</td> -->
+                <!-- <td>
+                    <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal"
+                        data-bs-target="#editComplaint" (click)="editComplaint(complaint)">Reply</button>
+                    <button type="button" class="btn btn-outline-danger"
+                        (click)="deleteComplaint(complaint)">Delete</button>
+                </td> -->
+            </tr>
+        </tbody>
+    </table>
+    <!-- Add Complaint -->
+    <div class="modal fade" id="addComplaint" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title fs-5" id="exampleModalLabel">Add New Query</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="complaintDetail">
+                        <!-- <div class="mb-3">
+                            <label for="customerId" class="form-label">Customer ID <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" formControlName="customerId" id="customerId"
+                                aria-describedby="emailHelp" [placeholder]="0">
+                        </div> -->
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="complaintName" id="complaintName"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message <span class="text-danger">*</span></label>
+                            <textarea class="form-control" formControlName="complaintMessage" id="complaintMessage"
+                                rows="3"></textarea>
+                        </div>
+                        <!-- <div class="mb-3">
+                            <label for="contactDate" class="form-label">Contact Date <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" formControlName="dateOfComplaint"
+                                id="dateOfComplaint" aria-describedby="emailHelp">
+                        </div> -->
+                        <!-- <div class="mb-3">
+                            <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
+                            <select class="form-select" formControlName="status" id="status">
+                                <option value="true">Active</option>
+                                <option value="false">Inactive</option>
+                            </select>
+                        </div> -->
+                        <!-- <div class="mb-3">
+                            <label for="reply" class="form-label">Reply <span class="text-danger">*</span></label>
+                            <textarea class="form-control" formControlName="reply" id="reply" rows="3"></textarea>
+                        </div> -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-outline-success" (click)="addComplaint()">Add
+                                Complaint</button>
+                        </div>
+                        <p>
+                            <span class="required">*</span>Required field
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Edit Complaint -->
+    <div class="modal fade" id="editComplaint" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fs-5" id="exampleModalLabel">Edit Complaint Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="complaintDetail">
+                        <!-- <div class="mb-3">
+                            <label for="customerId" class="form-label">Customer ID <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" formControlName="customerId" id="customerId"
+                                aria-describedby="emailHelp">
+                        </div> -->
+                        <!-- <div class="mb-3">
+                            <label for="title" class="form-label">Title <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="complaintName" id="complaintName"
+                                aria-describedby="emailHelp">
+                        </div> -->
+                        <!-- <div class="mb-3">
+                            <label for="message" class="form-label">Message <span class="text-danger">*</span></label>
+                            <textarea class="form-control" formControlName="complaintMessage" id="complaintMessage" rows="3"></textarea>
+                        </div> -->
+                        <!-- <div class="mb-3">
+                            <label for="contactDate" class="form-label">Contact Date <span class="text-danger">*</span></label>
+                            <input type="datetime" class="form-control" formControlName="dateOfComplaint" id="dateOfComplaint"
+                                aria-describedby="emailHelp">
+                        </div> -->
+                        <!-- <div class="mb-3">
+                            <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
+                            <select class="form-select" formControlName="status" id="status">
+                                <option value="true">Active</option>
+                                <option value="false">Inactive</option>
+                            </select>
+                        </div> -->
+                        <div class="mb-3">
+                            <label for="reply" class="form-label">Reply</label>
+                            <textarea class="form-control" formControlName="reply" id="reply" rows="3"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-outline-success" (click)="updateComplaint()"
+                                data-bs-dismiss="modal">Reply</button>
+                        </div>
+                        <p>
+                            <span class="required">*</span>Required field
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,103 @@
+/* Add this CSS to your existing styles or create a new CSS file */ 
+ 
+/* Container for the buttons */ 
+.button-container { 
+    display: flex; 
+    justify-content: space-between; 
+    /* Adjust as needed */ 
+} 
+ 
+/* Style for the buttons */ 
+.btn { 
+    /* Your button styles here */ 
+} 
+ 
+/* Style to align upload buttons in one row */ 
+.button-container>div { 
+    display: flex; 
+    flex-direction: row; 
+    justify-content: space-between; 
+} 
+ 
+/* Add some margin to the buttons for spacing */ 
+.button-container .btn { 
+    margin-right: 10px; 
+    /* Adjust as needed */ 
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.btn {
+    width: 200px;
+    margin-bottom: 10px;
+}
+
+.btn-primary {
+    background-color: #2D9596;;
+    color: #fff;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.button-gap {
+    margin-bottom: 20px;
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#pageSizeSelect {
+    width: 100px;
+    margin-right: 20px;
+}
+
+#employeeTable {
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 8px; /* Add a subtle border-radius for rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box-shadow for depth */
+}
+
+.table th,
+.table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table-light th,
+.table-light td {
+    background-color: #f8f9fa;
+}
+
+.pagination {
+    margin-top: 20px;
+}
+
+.page-link {
+    color: #f3f5f8;
+}
+
+.page-item.active .page-link {
+    background-color: #f1f1f2;
+    border-color: #e4e9ee;
+}

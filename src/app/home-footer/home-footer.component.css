@@ -1,0 +1,113 @@
+/* Footer Styles */
+
+/* Overall footer styling */
+footer {
+    background-color: #343a40; /* Dark background color */
+    color: #fff; /* Text color */
+    padding: 80px 0; /* Adjust the padding as needed */
+}
+
+/* Social media section styling */
+footer .border-bottom {
+    border-bottom: 1px solid #545b62; /* Border under social media section */
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+footer .border-bottom span {
+    font-weight: bold;
+}
+
+footer .text-reset {
+    font-size: 20px; /* Increase the icon size */
+    margin-right: 20px; /* Add spacing between icons */
+}
+
+/* Links section styling */
+footer .container {
+    margin-top: 40px;
+}
+
+footer h6 {
+    color: #fff;
+    font-weight: bold;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Copyright section styling */
+footer .text-center p {
+    background-color: rgba(0, 0, 0, 0.05); /* Light background color */
+    padding: 10px;
+    font-size: 18px;
+}
+
+/* Make links stand out more */
+footer a.text-reset {
+    color: #fff;
+    text-decoration: none;
+}
+
+footer a.text-reset:hover {
+    text-decoration: underline;
+}
+
+/* Icon styles (assuming Font Awesome icons) */
+footer .fab {
+    font-size: 36px; /* Adjust icon size */
+}
+
+/* Add shadows to the footer */
+footer {
+    box-shadow: 0px -5px 15px rgba(0, 0, 0, 0.3);
+}
+/* Center-align product titles and set text color to black */
+.p-4.border-bottom h6 {
+    text-align: center;
+    color: black;
+  
+}
+.text-uppercase {
+    
+    text-align: center;
+    margin: 0; /* Remove margin to center vertically */
+}
+
+
+/* Display products horizontally */
+.p-4.border-bottom {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+section.p-4.border-bottom {
+    background: linear-gradient(135deg, #9cd4e4 50%, #58b3b4 50%); /* Adjust color stops as needed */
+}
+section.p-4.border-bottom > div > p::before {
+    content: "\2022"; /* Unicode character for a bullet (•) */
+    display: inline-block;
+    text-align: left;
+    margin-right: 5px; /* Adjust the space between the bullet and the text */
+}
+section.p-4.border-bottom > div {
+   
+    border-radius: 10px; /* Rounded corners for the border */
+    background-color: aliceblue;
+    padding: 10px;
+    margin: 10px; /* Add some margin between the product containers */
+    text-align: center;
+}
+/* Style each product section */
+.p-4.border-bottom > div {
+    flex: 1; /* Equal width for each product section */
+    padding: 10px;
+    text-align: center; 
+    /* Center-align the content within each product section */
+}
+.p-4.border-bottom > div h6,
+.p-4.border-bottom > div p {
+    margin: 5px 0; /* Adjust the margin to reduce spacing between lines */
+}
+

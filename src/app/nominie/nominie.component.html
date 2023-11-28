@@ -1,0 +1,132 @@
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Insurance Nominees</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addNominee"
+                    type="submit">Add Nominee</button>
+            </div>
+        </div>
+    </nav>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Nominee ID</th>
+                <th scope="col">Nominee Name</th>
+                <th scope="col">Nominee Relation</th>
+                <th scope="col">Policy Number</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let nominee of nomineeList">
+                <td>{{nominee.nominieId}}</td>
+                <td>{{nominee.nominieName}}</td>
+                <td>{{nominee.nominieRelation}}</td>
+                <td>{{nominee.policyNo}}</td>
+                <td>{{nominee.status ? 'Active' : 'Inactive'}}</td>
+                <td>
+                    <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal"
+                        data-bs-target="#editNominee" (click)="editNominee(nominee)">Edit</button>
+                    <button type="button" class="btn btn-outline-danger"
+                        (click)="deleteNominee(nominee)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <!-- ADD Nominee -->
+    <div class="modal fade" id="addNominee" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title fs-5" id="exampleModalLabel">Add New Nominee</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="nomineeDetail">
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Nominee Name</label>
+                            <input type="text" class="form-control" formControlName="nominieName" id="nominieName"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Nominee Relation</label>
+                            <input type="text" class="form-control" formControlName="nominieRelation"
+                                id="nominieRelation" aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Policy Number</label>
+                            <input type="number" class="form-control" formControlName="policyNo" id="policyNo"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Status</label>
+                            <input type="checkbox" class="form-check-input" formControlName="status" id="status">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-outline-success" (click)="addNominee()"
+                                data-bs-dismiss="modal">Add Nominee</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Edit Nominee -->
+    <div class="modal fade" id="editNominee" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fs-5" id="exampleModalLabel">Edit Nominee Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="nomineeDetail">
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Nominee ID</label>
+                            <input type="number" class="form-control" formControlName="nominieId" id="nominieId"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Nominee Name</label>
+                            <input type="text" class="form-control" formControlName="nominieName" id="nominieName"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Nominee Relation</label>
+                            <input type="text" class="form-control" formControlName="nominieRelation"
+                                id="nominieRelation" aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Policy Number</label>
+                            <input type="number" class="form-control" formControlName="policyNo" id="policyNo"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Status</label>
+                            <input type="checkbox" class="form-check-input" formControlName="status" id="status">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-outline-success" (click)="updateNominee()"
+                                data-bs-dismiss="modal">Update Nominee</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>

@@ -1,0 +1,15 @@
+<!-- customer-modal.component.html -->
+<div class="modal-header">
+    <h4 class="modal-title">Agent Details</h4>
+    <button type="button" class="close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <p>First Name: {{ agent?.agentFirstName }}</p>
+    <p>Last Name: {{ agent?.agentLastName }}</p>
+    <p>Phone: {{ agent?.phone }}</p>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Close</button>
+</div>

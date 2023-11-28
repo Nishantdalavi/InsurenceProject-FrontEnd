@@ -1,0 +1,229 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #3494e6, #ec6ead);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.container-fulid {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.navbar {
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+    color: #3494e6;
+    transition: color 0.3s;
+}
+
+.navbar-brand:hover {
+    color: #ec6ead;
+}
+
+.navbar-toggler {
+    border: none;
+    background: transparent;
+}
+
+.navbar-toggler span {
+    background-color: #333;
+}
+
+.btn-outline-success {
+    border-color: #28a745;
+    color: #28a745;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-outline-success:hover {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.table-hover tbody tr {
+    transition: background-color 0.3s;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.modal-content {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+}
+
+.modal-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.modal-body input[type="text"],
+.modal-body input[type="email"],
+.modal-body input[type="password"],
+.modal-body input[type="number"] {
+    width: calc(100% - 2rem);
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s;
+}
+
+.modal-body input[type="text"]:focus,
+.modal-body input[type="email"]:focus,
+.modal-body input[type="password"]:focus,
+.modal-body input[type="number"]:focus {
+    border-color: #28a745;
+}
+
+.modal-footer button {
+    padding: 0.5rem 1.5rem;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.modal-footer button.btn-secondary {
+    background-color: #6c757d;
+    border: none;
+}
+
+.modal-footer button.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.modal-footer button.btn-outline-success {
+    border-color: #28a745;
+    color: #28a745;
+}
+
+.modal-footer button.btn-outline-success:hover {
+    background-color: #28a745;
+    color: #fff;
+}
+
+/* Custom CSS for table and header */
+.table {
+    background-color: #ffffff;
+    border-radius: 10px;
+}
+
+.table thead th {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Styling for "Back to Admin Page" button */
+.btn-outline-primary {
+    border-color: #007BFF;
+    color: #007BFF;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-outline-primary:hover {
+    background-color: #007BFF;
+    color: #fff;
+}
+
+/* Styling for alerts */
+.alert {
+    border-radius: 10px;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+}
+
+.pagination-controls label {
+    margin-right: 10px;
+}
+
+.pagination-controls select {
+    width: 60px;
+    /* Adjust width as needed */
+}
+
+/* Table Styles */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.table th {
+    background: #007BFF;
+    color: #fff;
+}
+
+.table th,
+.table td {
+    padding: 10px;
+    text-align: left;
+}
+
+.table th,
+.table td,
+.table tbody tr {
+    border: 1px solid #dee2e6;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Edit and Delete Buttons */
+.table .btn {
+    padding: 5px 10px;
+    margin: 2px;
+    border-radius: 5px;
+}
+
+.btn.btn-outline-primary {
+    background: #007BFF;
+    color: #fff;
+    border: 1px solid #007BFF;
+}
+
+.btn.btn-outline-primary:hover {
+    background: #0056b3;
+    border: 1px solid #0056b3;
+}
+
+.btn.btn-outline-danger {
+    background: #FF6B6B;
+    color: #fff;
+    border: 1px solid #FF6B6B;
+}
+
+.btn.btn-outline-danger:hover {
+    background: #FF4040;
+    border: 1px solid #FF4040;
+}

@@ -1,0 +1,147 @@
+<app-customerheader></app-customerheader>
+<div class="container-fulid">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Payments</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addPlan"
+                    type="submit">Add Payment</button>
+            </div> -->
+        </div>
+        <button class="btn btn-outline-primary float-end mt-2" routerLink="/customer/header">Back</button>
+    </nav>
+
+    <table class="table table-hover mt-4">
+        <thead class="thead-dark">
+            <tr>
+
+                <th scope="col">Sr No</th>
+                <th scope="col">Payment Id</th>
+                <th scope="col">Payment Type</th>
+
+                <th scope="col">Tax</th>
+                <th scope="col">Amount</th>
+                <th scope="col">TotalPayment</th>
+                <th scope="col">Policy</th>
+                <!-- <th scope="col">customerId</th> -->
+
+                <!-- <th scope="col">Action</th> -->
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let payment of paymentList;let i=index">
+                <td>{{calculateSRNumber(i)}}</td>
+                <td>{{payment.paymentId}}</td>
+                <td>{{payment.paymentType}}</td>
+
+                <td>{{payment.tax}}</td>
+                <td>{{payment.amount}}</td>
+                <td>{{payment.totalPayment}}</td>
+                <td>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" (click)="fetchPolicyDetails(payment.policyNo)">View
+                        </button>
+
+                    </div>
+                </td>
+                <!-- <td>{{payment.customerId}}</td> -->
+                <!-- <td>
+                    <button type="button" class="btn btn-outline-danger" (click)="delete(payment)">Delete</button>
+
+                </td> -->
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- pagination -->
+    <div class="pagination-controls">
+        <!-- Other pagination elements -->
+        <label for="pageSizeSelect">Page Size:</label>
+        <select id="pageSizeSelect" class="form-control" (change)="onPageSizeChange($event)">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <!-- Add more options as needed -->
+        </select>
+    </div>
+
+    <nav aria-label="Page navigation example ">
+        <ul class="pagination justify-content-center">
+            <li class="page-item  text-center " *ngFor="let page of pageNumbers">
+                <a class="page-link" [ngClass]="{ active: currentPage === page }" (click)="changePage(page)">{{ page
+                    }}</a>
+            </li>
+        </ul>
+    </nav>
+
+
+
+    <!-- ADD PLan -->
+    <div class="modal fade" id="addPlan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title fs-5" id="exampleModalLabel">Add payment</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="paymentDetail">
+                        <!-- <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label"> ID</label>
+                            <input type="number" class="form-control" formControlName="customerId" id="customerId"
+                                aria-describedby="emailHelp" placeholder="0">
+                        </div> -->
+
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Payment Type </label>
+                            <input type="text" class="form-control" formControlName="paymentType" id="paymentType"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Amount</label>
+                            <input type="number" class="form-control" formControlName="amount" id="amount"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Tax</label>
+                            <input type="number" class="form-control" formControlName="tax" id="tax"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Payment Amount</label>
+                            <input type="number" class="form-control" formControlName="totalPayment" id="totalPayment"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label"> Policy No</label>
+                            <input type="number" class="form-control" formControlName="policyNo" id="policyNo"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Customer Id</label>
+                            <input type="number" class="form-control" formControlName="customerId" id="customerId"
+                                aria-describedby="emailHelp">
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                    (click)="get()">Close</button>
+                                <button type=" button" class="btn btn-outline-success" (click)="add()">Add
+                                    payment</button>
+                            </div>
+
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>

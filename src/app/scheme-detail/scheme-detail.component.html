@@ -1,0 +1,369 @@
+<div class="container-fulid">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Insurance SchemeDetail</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addSchemeDetail"
+                    type="submit">Add SchemeDetail</button>
+            </div>
+        </div>
+    </nav>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Detail ID</th>
+                <th scope="col">Scheme Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Min Amount</th>
+                <th scope="col">Max Amount</th>
+                <th scope="col">Min Age</th>
+                <th scope="col">Max Age</th>
+
+                <th scope="col">Min Term</th>
+                <th scope="col">Max Term</th>
+                <th scope="col">Profit Percent</th>
+                <th scope="col">First Com</th>
+                <th scope="col">Emi Com</th>
+                <!-- <th scope="col">Status</th> -->
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let schemeDetail of schemeDetailList">
+                <td>{{schemeDetail.detailId}}</td>
+                <td>{{schemeDetail.schemeImage}}</td>
+                <td>{{schemeDetail.description}}</td>
+                <td>{{schemeDetail.minAmount}}</td>
+                <td>{{schemeDetail.maxAmount}}</td>
+                <td>{{schemeDetail.minAge}}</td>
+                <td>{{schemeDetail.maxAge}}</td>
+                <td>{{schemeDetail.minTerm}}</td>
+                <td>{{schemeDetail.maxTerm}}</td>
+                <td>{{schemeDetail.profitPercent}}</td>
+                <td>{{schemeDetail.firstPremiumCommissionPercent}}</td>
+                <td>{{schemeDetail.emiCommissionPercent}}</td>
+                <!-- <td>{{schemeDetail.status ? 'Active' : 'Inactive'}}</td> -->
+                <td>
+                    <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal"
+                        data-bs-target="#editSchemeDetail" (click)="editSchemeDetail(schemeDetail)">Edit</button>
+                    <!-- <button type="button" class="btn btn-outline-danger"
+                        (click)="deleteSchemeDetail(schemeDetail)">Delete</button> -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- ADD SchemeDetail -->
+    <div class="modal fade" id="addSchemeDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title fs-5" id="exampleModalLabel">Add New SchemeDetail</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="schemeDetail">
+                        <!-- <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Detail ID <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="detailId" id="detailId"
+                                aria-describedby="emailHelp">
+                        </div> -->
+                        <!-- jsu added -->
+
+                        <div class="mb-3">
+                            <label for="schemeImageId" class="form-label">Insurance Schemes <span
+                                    class="text-danger">*</span></label>
+                            <select class="form-select" formControlName="detailId" id="detailId" [(ngModel)]="selectedSchemeId" (change)="getSchemeName(selectedSchemeId)">
+                                <option [value]="" disabled>Select Scheme</option>
+                                <option *ngFor="let schemeImage of schemeImages" [value]="schemeImage.schemeId">{{
+                                    schemeImage.schemeName }}</option>
+                            </select>
+                        </div>
+
+
+
+
+
+
+
+
+
+                        <!-- <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Scheme Name <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="schemeImage" id="schemeImage"
+                                aria-describedby="emailHelp">
+                        </div> -->
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Description<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="description" id="description" aria-describedby="emailHelp">
+                            <div *ngIf="schemeDetail.controls['description'].errors && (schemeDetail.controls['description'].dirty || schemeDetail.controls['description'].touched)">
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['description'].hasError('required')">Description is required.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['description'].hasError('pattern')">Invalid description format.</div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Min Amount<span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" formControlName="minAmount" id="minAmount" aria-describedby="emailHelp">
+                            <div *ngIf="schemeDetail.controls['minAmount'].errors && (schemeDetail.controls['minAmount'].dirty || schemeDetail.controls['minAmount'].touched)">
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['minAmount'].hasError('required')">Min Amount is required.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['minAmount'].hasError('nonNegativeNumber')">Min Amount cannot be negative.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['minAmount'].hasError('min')">Min Amount cannot be less than 0.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.hasError('minMaxError', 'minAmount')">Min Amount must be less than Max Amount.</div>
+                            </div>
+                        </div>
+                        <div *ngIf="schemeDetail.hasError('minMaxError', ['minAmount', 'maxAmount'])">
+                            <div class="alert alert-danger">Max must be greater than Min.</div>
+                          </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Max Amount<span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" formControlName="maxAmount" id="maxAmount" aria-describedby="emailHelp">
+                            <div *ngIf="schemeDetail.controls['maxAmount'].errors && (schemeDetail.controls['maxAmount'].dirty || schemeDetail.controls['maxAmount'].touched)">
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['maxAmount'].hasError('required')">Max Amount is required.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['maxAmount'].hasError('nonNegativeNumber')">Max Amount cannot be negative.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['maxAmount'].hasError('min')">Max Amount cannot be less than 0.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.hasError('minMaxError', 'maxAmount')">Max Amount must be greater than Min Amount.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Min Age<span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" formControlName="minAge" id="minAge" aria-describedby="emailHelp">
+                            <div *ngIf="schemeDetail.controls['minAge'].errors && (schemeDetail.controls['minAge'].dirty || schemeDetail.controls['minAge'].touched)">
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['minAge'].hasError('required')">Min Age is required.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['minAge'].hasError('nonNegativeNumber')">Min Age cannot be negative.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['minAge'].hasError('min')">Min Age cannot be less than 0.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.hasError('minMaxError', 'minAge')">Min Age must be less than Max Age.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Max Age<span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" formControlName="maxAge" id="maxAge" aria-describedby="emailHelp">
+                            <div *ngIf="schemeDetail.controls['maxAge'].errors && (schemeDetail.controls['maxAge'].dirty || schemeDetail.controls['maxAge'].touched)">
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['maxAge'].hasError('required')">Max Age is required.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['maxAge'].hasError('nonNegativeNumber')">Max Age cannot be negative.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['maxAge'].hasError('min')">Max Age cannot be less than 0.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.hasError('minMaxError', 'maxAge')">Max Age must be greater than Min Age.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['maxAge'].hasError('max')">Max  % cannot be more than 80.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Min Term<span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" formControlName="minTerm" id="minTerm" aria-describedby="emailHelp">
+                            <div *ngIf="schemeDetail.controls['minTerm'].errors && (schemeDetail.controls['minTerm'].dirty || schemeDetail.controls['minTerm'].touched)">
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['minTerm'].hasError('required')">Min Term is required.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['minTerm'].hasError('nonNegativeNumber')">Min Term cannot be negative.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['minTerm'].hasError('min')">Min Term cannot be less than 0.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.hasError('minMaxError', 'minTerm')">Min Term must be less than Max Term.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Max Term<span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" formControlName="maxTerm" id="maxTerm" aria-describedby="emailHelp">
+                            <div *ngIf="schemeDetail.controls['maxTerm'].errors && (schemeDetail.controls['maxTerm'].dirty || schemeDetail.controls['maxTerm'].touched)">
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['maxTerm'].hasError('required')">Max Term is required.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['maxTerm'].hasError('nonNegativeNumber')">Max Term cannot be negative.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['maxTerm'].hasError('min')">Max Term cannot be less than 0.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.hasError('minMaxError', 'maxTerm')">Max Term must be greater than Min Term.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Profit %<span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" formControlName="profitPercent" id="profitPercent" aria-describedby="emailHelp">
+                            <div *ngIf="schemeDetail.controls['profitPercent'].errors && (schemeDetail.controls['profitPercent'].dirty || schemeDetail.controls['profitPercent'].touched)">
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['profitPercent'].hasError('required')">Profit % is required.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['profitPercent'].hasError('nonNegativeNumber')">Profit % cannot be negative.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['profitPercent'].hasError('min')">Profit % cannot be less than 0.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['profitPercent'].hasError('max')">Profit % cannot be more than 15.</div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">First Com<span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" formControlName="firstPremiumCommissionPercent" id="firstPremiumCommissionPercent" aria-describedby="emailHelp">
+                            <div *ngIf="schemeDetail.controls['firstPremiumCommissionPercent'].errors && (schemeDetail.controls['firstPremiumCommissionPercent'].dirty || schemeDetail.controls['firstPremiumCommissionPercent'].touched)">
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['firstPremiumCommissionPercent'].hasError('required')">First Premium Commission % is required.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['firstPremiumCommissionPercent'].hasError('nonNegativeNumber')">First Premium Commission % cannot be negative.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['firstPremiumCommissionPercent'].hasError('min')">First Premium Commission % cannot be less than 0.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['firstPremiumCommissionPercent'].hasError('max')">First Premium Commission % cannot be more than 15.</div>
+
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Emi com<span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" formControlName="emiCommissionPercent" id="emiCommissionPercent" aria-describedby="emailHelp">
+                            <div *ngIf="schemeDetail.controls['emiCommissionPercent'].errors && (schemeDetail.controls['emiCommissionPercent'].dirty || schemeDetail.controls['emiCommissionPercent'].touched)">
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['emiCommissionPercent'].hasError('required')">Emi Commission % is required.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['emiCommissionPercent'].hasError('nonNegativeNumber')">Emi Commission % cannot be negative.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['emiCommissionPercent'].hasError('min')">Emi Commission % cannot be less than 0.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['emiCommissionPercent'].hasError('max')">Emi Commission  % cannot be more than 15.</div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-outline-success" (click)="addSchemeDetail()">Add
+                                SchemeDetail</button>
+                        </div>
+                    <p>
+                        <span class="required">*</span>Required field
+                      </p>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Edit SchemeDetail -->
+    <div class="modal fade" id="editSchemeDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fs-5" id="exampleModalLabel">Edit SchemeDetail Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="schemeDetail">
+                        <div class="mb-3">
+                            <!-- <label type="hidden" for="exampleInputEmail1" class="form-label">Detail ID <span
+                                    class="text-danger">*</span></label> -->
+                            <input type="hidden" class="form-control" formControlName="detailId" id="detailId"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Scheme Name <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="schemeImage" id="schemeImage"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Description<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="description" id="description" aria-describedby="emailHelp">
+                            <div *ngIf="schemeDetail.controls['description'].errors && (schemeDetail.controls['description'].dirty || schemeDetail.controls['description'].touched)">
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['description'].hasError('required')">Description is required.</div>
+                                
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Min Amount<span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" formControlName="minAmount" id="minAmount" aria-describedby="emailHelp">
+                            <div *ngIf="schemeDetail.controls['minAmount'].errors && (schemeDetail.controls['minAmount'].dirty || schemeDetail.controls['minAmount'].touched)">
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['minAmount'].hasError('required')">Min Amount is required.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['minAmount'].hasError('nonNegativeNumber')">Min Amount cannot be negative.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['minAmount'].hasError('min')">Min Amount cannot be less than 0.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.hasError('minMaxError', 'minAmount')">Min Amount must be less than Max Amount.</div>
+                            </div>
+                        </div>
+                        <div *ngIf="schemeDetail.hasError('minMaxError', ['minAmount', 'maxAmount'])">
+                            <div class="alert alert-danger">Max must be greater than Min.</div>
+                          </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Max Amount<span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" formControlName="maxAmount" id="maxAmount" aria-describedby="emailHelp">
+                            <div *ngIf="schemeDetail.controls['maxAmount'].errors && (schemeDetail.controls['maxAmount'].dirty || schemeDetail.controls['maxAmount'].touched)">
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['maxAmount'].hasError('required')">Max Amount is required.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['maxAmount'].hasError('nonNegativeNumber')">Max Amount cannot be negative.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['maxAmount'].hasError('min')">Max Amount cannot be less than 0.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.hasError('minMaxError', 'maxAmount')">Max Amount must be greater than Min Amount.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Min Age<span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" formControlName="minAge" id="minAge" aria-describedby="emailHelp">
+                            <div *ngIf="schemeDetail.controls['minAge'].errors && (schemeDetail.controls['minAge'].dirty || schemeDetail.controls['minAge'].touched)">
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['minAge'].hasError('required')">Min Age is required.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['minAge'].hasError('nonNegativeNumber')">Min Age cannot be negative.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['minAge'].hasError('min')">Min Age cannot be less than 0.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.hasError('minMaxError', 'minAge')">Min Age must be less than Max Age.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Max Age<span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" formControlName="maxAge" id="maxAge" aria-describedby="emailHelp">
+                            <div *ngIf="schemeDetail.controls['maxAge'].errors && (schemeDetail.controls['maxAge'].dirty || schemeDetail.controls['maxAge'].touched)">
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['maxAge'].hasError('required')">Max Age is required.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['maxAge'].hasError('nonNegativeNumber')">Max Age cannot be negative.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['maxAge'].hasError('min')">Max Age cannot be less than 0.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.hasError('minMaxError', 'maxAge')">Max Age must be greater than Min Age.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['maxAge'].hasError('max')">Max  % cannot be more than 80.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Min Term<span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" formControlName="minTerm" id="minTerm" aria-describedby="emailHelp">
+                            <div *ngIf="schemeDetail.controls['minTerm'].errors && (schemeDetail.controls['minTerm'].dirty || schemeDetail.controls['minTerm'].touched)">
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['minTerm'].hasError('required')">Min Term is required.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['minTerm'].hasError('nonNegativeNumber')">Min Term cannot be negative.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['minTerm'].hasError('min')">Min Term cannot be less than 0.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.hasError('minMaxError', 'minTerm')">Min Term must be less than Max Term.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Max Term<span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" formControlName="maxTerm" id="maxTerm" aria-describedby="emailHelp">
+                            <div *ngIf="schemeDetail.controls['maxTerm'].errors && (schemeDetail.controls['maxTerm'].dirty || schemeDetail.controls['maxTerm'].touched)">
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['maxTerm'].hasError('required')">Max Term is required.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['maxTerm'].hasError('nonNegativeNumber')">Max Term cannot be negative.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['maxTerm'].hasError('min')">Max Term cannot be less than 0.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.hasError('minMaxError', 'maxTerm')">Max Term must be greater than Min Term.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Profit %<span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" formControlName="profitPercent" id="profitPercent" aria-describedby="emailHelp">
+                            <div *ngIf="schemeDetail.controls['profitPercent'].errors && (schemeDetail.controls['profitPercent'].dirty || schemeDetail.controls['profitPercent'].touched)">
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['profitPercent'].hasError('required')">Profit % is required.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['profitPercent'].hasError('nonNegativeNumber')">Profit % cannot be negative.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['profitPercent'].hasError('min')">Profit % cannot be less than 0.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['profitPercent'].hasError('max')">Profit % cannot be more than 15.</div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">First Com<span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" formControlName="firstPremiumCommissionPercent" id="firstPremiumCommissionPercent" aria-describedby="emailHelp">
+                            <div *ngIf="schemeDetail.controls['firstPremiumCommissionPercent'].errors && (schemeDetail.controls['firstPremiumCommissionPercent'].dirty || schemeDetail.controls['firstPremiumCommissionPercent'].touched)">
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['firstPremiumCommissionPercent'].hasError('required')">First Premium Commission % is required.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['firstPremiumCommissionPercent'].hasError('nonNegativeNumber')">First Premium Commission % cannot be negative.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['firstPremiumCommissionPercent'].hasError('min')">First Premium Commission % cannot be less than 0.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['firstPremiumCommissionPercent'].hasError('max')">First Premium Commission % cannot be more than 15.</div>
+
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Emi com<span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" formControlName="emiCommissionPercent" id="emiCommissionPercent" aria-describedby="emailHelp">
+                            <div *ngIf="schemeDetail.controls['emiCommissionPercent'].errors && (schemeDetail.controls['emiCommissionPercent'].dirty || schemeDetail.controls['emiCommissionPercent'].touched)">
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['emiCommissionPercent'].hasError('required')">Emi Commission % is required.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['emiCommissionPercent'].hasError('nonNegativeNumber')">Emi Commission % cannot be negative.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['emiCommissionPercent'].hasError('min')">Emi Commission % cannot be less than 0.</div>
+                                <div class="alert alert-danger" *ngIf="schemeDetail.controls['emiCommissionPercent'].hasError('max')">Emi Commission  % cannot be more than 15.</div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-outline-success" (click)="updateSchemeDetail()"
+                                data-bs-dismiss="modal">Update SchemeDetail</button>
+                        </div>
+                    <p>
+                        <span class="required">*</span>Required field
+                      </p>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

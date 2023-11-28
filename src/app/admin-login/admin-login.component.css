@@ -1,0 +1,72 @@
+/* Spinner Container */ 
+.spinner-container { 
+    display: flex; 
+    justify-content: center; 
+    margin-top: 20px; 
+} 
+ 
+.mat-spinner { 
+    color: #ff6b6b; 
+} 
+ 
+/* Adjust Bootstrap styles if needed */ 
+/* Spinner Container */ 
+.spinner-container { 
+    display: flex; 
+    justify-content: center; 
+    margin-top: 20px; 
+} 
+ 
+.mat-spinner { 
+    color: #ff6b6b; 
+} 
+ 
+ 
+ 
+ 
+/* Adjust Bootstrap styles if needed */ 
+ 
+ 
+/* Custom CSS for the Agent Login Form */ 
+.my-login-form { 
+    max-width: 400px; 
+    margin: 0 auto; 
+} 
+ 
+.spinner-container { 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    margin-top: 20px; 
+} 
+ 
+/* Custom CSS for centering the card */ 
+.card { 
+    margin: 0 auto; 
+    float: none; 
+    margin-bottom: 10px; 
+} 
+ 
+.card-header { 
+    background-color: #007BFF; 
+    color: #fff; 
+} 
+ 
+/* Styling for the "Login" button */ 
+.btn-primary { 
+    background-color: #007BFF; 
+    color: #fff; 
+} 
+ 
+/* Styling for the spinner inside the button */ 
+.spinner-border { 
+    width: 1.5rem; 
+    height: 1.5rem; 
+} 
+ 
+/* Responsive layout for smaller screens */ 
+@media (max-width: 576px) { 
+    .my-login-form { 
+        max-width: 100%; 
+    } 
+}

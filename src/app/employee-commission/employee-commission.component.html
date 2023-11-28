@@ -1,0 +1,166 @@
+<app-employeeheader></app-employeeheader> 
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Commission</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addCommission"
+                    type="submit">Add Commission</button> -->
+            </div>
+        </div>
+    </nav>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Commission ID</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Date</th>
+                <!-- <th scope="col">Status</th> -->
+                <th scope="col">Payment Status</th>
+                <th scope="col">Policy </th>
+                <th scope="col">Agent </th>
+
+                <!-- <th scope="col">Action</th> -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let commission of commissionList">
+                <td>{{commission.commissionId}}</td>
+                <td>{{commission.amount}}</td>
+                <td>{{commission.date | date:'medium'}}</td>
+                <td>
+                    <p [style.color]="commission.status ? 'green' : 'red'">
+                        {{ commission.status ? 'Payment Received' : 'In Process' }}
+                    </p>
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" (click)="fetchPolicyDetails(commission.policyId)">View
+                        </button>
+
+                    </div>
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" (click)="fetchAgentDetails(commission.agentId)">View
+                        </button>
+
+                    </div>
+                </td>
+
+                <!-- <td>{{commission.status}}</td> -->
+
+
+                <!-- <td>
+                    <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal"
+                        data-bs-target="#editCommission" (click)="editCommission(commission)">Edit</button>
+                    <button type="button" class="btn btn-outline-danger"
+                        (click)="deleteCommission(commission)">Delete</button>
+                </td> -->
+            </tr>
+        </tbody>
+    </table>
+    <!-- ADD Commission -->
+    <div class="modal fade" id="addCommission" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title fs-5" id="exampleModalLabel">Add New Commission</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="commissionDetail">
+
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Amount</label>
+                            <input type="number" class="form-control" formControlName="amount" id="amount"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" class="form-control" formControlName="date" id="date"
+                                aria-describedby="emailHelp">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="policyId" class="form-label">Policy ID</label>
+                            <input type="number" class="form-control" formControlName="policyId" id="policyId"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="agentId" class="form-label">Agent ID</label>
+                            <input type="number" class="form-control" formControlName="agentId" id="agentId"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-outline-success" (click)="addCommission()">Add
+                                Commission</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Commission -->
+    <div class="modal fade" id="editCommission" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fs-5" id="exampleModalLabel">Edit Commission Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="commissionDetail">
+                        <div class="mb-3">
+                            <label for="commissionId" class="form-label">Commission ID</label>
+                            <input type="number" class="form-control" formControlName="commissionId" id="commissionId"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Amount</label>
+                            <input type="number" class="form-control" formControlName="amount" id="amount"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="datetime" class="form-control" formControlName="date" id="date"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <!-- <div class="mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select" formControlName="status" id="status">
+                                <option [value]="true">Active</option>
+                                <option [value]="false">Inactive</option>
+                            </select>
+                        </div> -->
+
+                        <div class="mb-3">
+                            <label for="policyId" class="form-label">Policy ID</label>
+                            <input type="number" class="form-control" formControlName="policyId" id="policyId"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="agentId" class="form-label">Agent ID</label>
+                            <input type="number" class="form-control" formControlName="agentId" id="agentId"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-outline-success" (click)="updateCommission()"
+                                data-bs-dismiss="modal">Update Commission</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

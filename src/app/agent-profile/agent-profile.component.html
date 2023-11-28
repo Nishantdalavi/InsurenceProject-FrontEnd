@@ -1,0 +1,52 @@
+<!-- <mat-card class="mat-card">
+    <mat-card-content>
+        <p><strong>Agent Id:</strong> {{ data.agentId }}</p>
+        <p><strong>First Name:</strong> {{ data.agentFirstName }}</p>
+        <p><strong>Last Name:</strong> {{ data.agentLastName }}</p>
+        <p><strong>Phone:</strong>{{data.phone}}</p>
+    </mat-card-content>
+</mat-card> -->
+<mat-card class="mat-card">
+    <mat-card-content>
+        <form (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="agentId">Agent ID: <span class="text-danger">*</span></label>
+                <input type="text" id="agentId" [(ngModel)]="agentId" name="agentId" class="form-control" disabled>
+            </div>
+
+            <div class="form-group">
+                <label for="agentFirstName">First Name: <span class="text-danger">*</span></label>
+                <input type="text" id="agentFirstName" [(ngModel)]="agentFirstName" name="agentFirstName"
+                    class="form-control" disabled>
+            </div>
+
+            <div class="form-group">
+                <label for="agentLastName">Last Name: <span class="text-danger">*</span></label>
+                <input type="text" id="agentLastName" [(ngModel)]="agentLastName" name="agentLastName"
+                    class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="qualification">Qualification: <span class="text-danger">*</span></label>
+                <input type="text" id="qualification" [(ngModel)]="qualification" name="qualification"
+                    class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email: <span class="text-danger">*</span></label>
+                <input type="text" id="email" [(ngModel)]="email" name="email" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone: <span class="text-danger">*</span></label>
+                <input type="text" id="phone" [(ngModel)]="phone" name="phone" class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save</button>
+            <p>
+                <span class="required">*</span>Required field
+            </p>
+            
+        </form>
+    </mat-card-content>
+</mat-card>

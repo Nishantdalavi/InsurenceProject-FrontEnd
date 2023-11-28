@@ -1,0 +1,279 @@
+<!-- <div class="container">
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Customer ID</td>
+                <td>{{ policy.customerId }}</td>
+            </tr>
+            <tr>
+                <td>Scheme ID</td>
+                <td>{{ policy.schemeId }}</td>
+            </tr>
+            <tr>
+                <td>Mode</td>
+                <td>
+                    {{ policy.premiumMode === 0 ? 'Yearly' : policy.premiumMode === 1 ? 'Half Yearly' :
+                    policy.premiumMode === 2 ? 'Quarterly' : 'Monthly' }}
+                </td>
+            </tr>
+            <tr>
+                <td>Issue Date</td>
+                <td>{{ policy.issueDate | date: "dd-MM-yyyy" }}</td>
+            </tr>
+            <tr>
+                <td>Maturity Date</td>
+                <td>{{ policy.maturityDate | date: "dd-MM-yyyy" }}</td>
+            </tr>
+            <tr>
+                <td>Premium</td>
+                <td>{{ policy.premium }}</td>
+            </tr>
+            <tr>
+                <td>Sum Assured</td>
+                <td>{{ policy.sumAssured }}</td>
+            </tr>
+            <tr>
+                <td>Nominee</td>
+                <td>
+                    <form [formGroup]="NomineeForm">
+                        <button class="btn btn-primary p-2" *ngIf="!showNomineeFields" (click)="toggleNomineeFields()">
+                            Add Nominee
+                        </button>
+                        <div *ngIf="showNomineeFields">
+                            <input type="text" class="table-input" placeholder="Nominee Name"
+                                formControlName="nomineeName">
+                            <div *ngIf="NomineeForm.controls['nomineeName'].hasError('required')">
+                                <p class="error-message">Nominee Name is required.</p>
+                            </div>
+                            <div *ngIf="NomineeForm.controls['nomineeName'].hasError('pattern')">
+                                <p class="error-message">Invalid format for Nominee Name.</p>
+                            </div>
+                            <input type="text" class="table-input" placeholder="Relation" formControlName="relation">
+                            <div *ngIf="NomineeForm.controls['relation'].hasError('required')">
+                                <p class="error-message">Relation is required.</p>
+                            </div>
+                            <div *ngIf="NomineeForm.controls['relation'].hasError('pattern')">
+                                <p class="error-message">Invalid format for Relation.</p>
+                            </div>
+                            <button class="btn btn-success p-2" [disabled]="isNomineeAdded" (click)="AddNominee()">Add
+                                Nominee</button>
+                            <button class="btn btn-primary p-2" *ngIf="isNomineeAdded && !isAddButtonDisabled"
+                                (click)="toggleAddButton()">
+                                Add Nominee
+                            </button>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>Agent Code</td>
+                <td>
+                    <input class="table-input" type="number" [(ngModel)]="policy.agentId">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="col-12 mt-2">
+        <button id="button" class="submit" data-bs-toggle="modal" data-bs-target="#paymentModal"
+            (click)="FillPayment()">
+            Make Payment
+        </button>
+    </div>
+</div>
+
+<div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>Amount</td>
+                            <td>{{ policy.premium }}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Tax</td>
+                            <td>{{ policy.PaymentDTO?.tax }}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Amount</td>
+                            <td>{{ policy.PaymentDTO?.totalPayment }}</td>
+                        </tr>
+                        <tr>
+                            <td>Bank Details</td>
+                            <td>
+                                <div>
+                                    <select [(ngModel)]="policy.PaymentDTO!.paymentType">
+                                        <option value="Debit Card">Debit Card</option>
+                                        <option value="Credit Card">Credit Card</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <input type="text" class="table-input" placeholder="Enter Card Number"
+                                        [(ngModel)]="policy.PaymentDTO!.cardNumber">
+                                </div>
+                                <div>
+                                    <input type="text" class="table-input" placeholder="Cvv"
+                                        [(ngModel)]="policy.PaymentDTO!.cvv">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button id="save" type="button" class="btn btn-primary" (click)="pay()">Pay</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+
+
+
+<div class="container">
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Customer ID</td>
+                <td>{{ policy.customerId }}</td>
+            </tr>
+            <tr>
+                <td>Scheme ID</td>
+                <td>{{ policy.schemeId }}</td>
+            </tr>
+            <tr>
+                <td>Mode</td>
+                <td>
+                    {{ policy.premiumMode === 0 ? 'Yearly' : policy.premiumMode === 1 ? 'Half Yearly' :
+                    policy.premiumMode === 2 ? 'Quarterly' : 'Monthly' }}
+                </td>
+            </tr>
+            <tr>
+                <td>Issue Date</td>
+                <td>{{ policy.issueDate | date: "dd-MM-yyyy" }}</td>
+            </tr>
+            <tr>
+                <td>Maturity Date</td>
+                <td>{{ policy.maturityDate | date: "dd-MM-yyyy" }}</td>
+            </tr>
+            <tr>
+                <td>Premium</td>
+                <td>{{ policy.premium }}</td>
+            </tr>
+            <tr>
+                <td>Sum Assured</td>
+                <td>{{ policy.sumAssured }}</td>
+            </tr>
+            <tr>
+                <td>Nominee</td>
+                <td>
+                    <form [formGroup]="NomineeForm">
+                        <button class="btn btn-primary" *ngIf="!showNomineeFields" (click)="toggleNomineeFields()">
+                            <i class="fas fa-plus"></i> Add Nominee
+                        </button>
+                        <div *ngIf="showNomineeFields">
+                            <input type="text" class="table-input" placeholder="Nominee Name"
+                                formControlName="nomineeName">
+                            <div *ngIf="NomineeForm.controls['nomineeName'].hasError('required')">
+                                <p class="error-message">Nominee Name is required.</p>
+                            </div>
+                            <div *ngIf="NomineeForm.controls['nomineeName'].hasError('pattern')">
+                                <p class="error-message">Invalid format for Nominee Name.</p>
+                            </div>
+                            <input type="text" class="table-input" placeholder="Relation" formControlName="relation">
+                            <div *ngIf="NomineeForm.controls['relation'].hasError('required')">
+                                <p class="error-message">Relation is required.</p>
+                            </div>
+                            <div *ngIf="NomineeForm.controls['relation'].hasError('pattern')">
+                                <p class="error-message">Invalid format for Relation.</p>
+                            </div>
+                            <button class="btn btn-success" [disabled]="isNomineeAdded" (click)="AddNominee()">
+                                <i class="fas fa-check"></i> Add Nominee
+                            </button>
+                            <button class="btn btn-primary" *ngIf="isNomineeAdded && !isAddButtonDisabled"
+                                (click)="toggleAddButton()">
+                                <i class="fas fa-plus"></i> Add Nominee
+                            </button>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <!-- <td>Agent Code</td>
+                <td>
+                    <input class="table-input" type="number" [(ngModel)]="policy.agentId">
+                </td> -->
+            </tr>
+        </tbody>
+    </table>
+    <div class="col-12 mt-2">
+        <button id="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#paymentModal"
+            (click)="FillPayment()">
+            <i class="fas fa-credit-card"></i> Make Payment
+        </button>
+    </div>
+</div>
+
+<div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Payment Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>Amount</td>
+                            <td>{{ policy.premium }}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Tax</td>
+                            <td>{{ policy.PaymentDTO?.tax }}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Amount</td>
+                            <td>{{ policy.PaymentDTO?.totalPayment }}</td>
+                        </tr>
+                        <tr>
+                            <td>Bank Details</td>
+                            <td>
+                                <div>
+                                    <select [(ngModel)]="policy.PaymentDTO!.paymentType">
+                                        <option value="Debit Card">Debit Card</option>
+                                        <option value="Credit Card">Credit Card</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <input type="text" class="table-input" placeholder="Enter Card Number"
+                                        [(ngModel)]="policy.PaymentDTO!.cardNumber">
+                                </div>
+                                <div>
+                                    <input type="text" class="table-input" placeholder="Cvv"
+                                        [(ngModel)]="policy.PaymentDTO!.cvv">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+                <button id="save" type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="pay()"
+                    data-bs-dismiss="modal">
+                    <i class="fas fa-check"></i> Pay
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

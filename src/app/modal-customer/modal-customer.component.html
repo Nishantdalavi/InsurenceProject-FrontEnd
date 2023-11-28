@@ -1,0 +1,24 @@
+<!-- customer-modal.component.html -->
+<div class="modal-header">
+    <h4 class="modal-title">Customer Details</h4>
+    <button type="button" class="close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="customer-details">
+
+        <h2>{{ customer?.customerFirstName }} {{ customer?.customerLastName }}</h2>
+        <p>Customer ID: {{ customer?.customerId }}</p>
+        <p>Phone: {{ customer?.phone }}</p>
+        <p>Location: {{ customer?.city }}, {{ customer?.state }}</p>
+        <p>Date of Birth: {{ customer?.dob | date: 'MM/dd/yyyy' }}</p>
+    </div>
+    <div class="customer-counts">
+        <p>Documents Count: {{ customer?.documentsCount }}</p>
+        <p>Policies Count: {{ customer?.policiesCount }}</p>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Close</button>
+</div>

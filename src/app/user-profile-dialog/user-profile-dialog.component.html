@@ -1,0 +1,40 @@
+<!-- <h1>Admin Profile</h1>
+<p>Id: {{ data.adminId }}</p>
+<p>First Name: {{ data.adminFirstName }}</p>
+<p>Last Name: {{ data.adminLastName }}</p> 
+<mat-card class="mat-card">
+    <mat-card-content>
+        <p><strong>Id:</strong> {{ data.adminId }}</p>
+        <p><strong>First Name:</strong> {{ data.adminFirstName }}</p>
+        <p><strong>Last Name:</strong> {{ data.adminLastName }}</p>
+    </mat-card-content>
+</mat-card>   -->
+<mat-card class="mat-card">
+    <mat-card-content>
+        <form (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="adminId">Admin ID: <span class="text-danger">*</span></label>
+                <input type="text" id="adminId" [(ngModel)]="adminId" name="adminId" class="form-control" disabled>
+            </div>
+
+            <div class="form-group">
+                <label for="adminFirstName">First Name: <span class="text-danger">*</span></label>
+                <input type="text" id="adminFirstName" [(ngModel)]="adminFirstName" name="adminFirstName"
+                    class="form-control" disabled>
+            </div>
+
+            <div class="form-group">
+                <label for="adminLastName">Last Name: <span class="text-danger">*</span></label>
+                <input type="text" id="adminLastName" [(ngModel)]="adminLastName" name="adminLastName"
+                    class="form-control">
+            </div>
+
+            <!-- <div class="form-group">
+                <label for="userId">User ID: <span class="text-danger">*</span></label>
+                <input type="text" id="userId" [(ngModel)]="userId" name="userId" class="form-control" disabled>
+            </div> -->
+
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </mat-card-content>
+</mat-card>

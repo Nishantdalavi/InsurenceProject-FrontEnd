@@ -1,0 +1,58 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!-- Container wrapper -->
+    <div class="container">
+        <!-- Navbar brand -->
+        <!-- Toggle button -->
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarButtonsExample"
+            aria-controls="navbarButtonsExample" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse" id="navbarButtonsExample">
+            <!-- Left links -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <!-- Profile icon -->
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#"> <mat-icon aria-hidden="false" aria-label="Example home icon"
+                            type="button" fontIcon="home" href="#"></mat-icon></a>
+                </li>
+                <!-- <li class="nav-item dropdown">
+                    <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        Insurance
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-item" href="/plan">Insurance Plan</a></li>
+                        <li><a class="dropdown-item" href="#">Insurance Scheme</a></li>
+                        <li><a class="dropdown-item" href="#">Scheme Details </a></li>
+                    </ul>
+                </li> -->
+
+            </ul>
+
+            <!-- Left links -->
+
+            <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center">
+                    <button type="button" class="btn btn-primary me-3" (click)="showUserProfile()">
+                        <i class="fas fa-user"></i>
+                    </button>
+                </div>
+
+                <button type="button" class="btn btn-primary me-3" (click)="logout()">
+                    Logout
+                </button>
+                <ul class="no-bullets">
+                    <li><a routerLink="/password"><i class="no-bullets" class="fas fa-key fa-2x custom-tooltip"
+                                title="Change Password"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- Collapsible wrapper -->
+    </div>
+    <!-- Container wrapper -->
+</nav>

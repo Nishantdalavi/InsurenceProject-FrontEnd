@@ -1,0 +1,76 @@
+
+<div class="container">
+    <div class="row">
+        <div class="pagination-controls ms-4 mb-3 pt-3">
+            <!-- Other pagination elements -->
+            <label for="pageSizeSelect">Page Size:</label>
+            <select id="pageSizeSelect" class="form-control" (change)="onPageSizeChange($event)">
+
+                <option value="10">5</option>
+                <option value="20">10</option>
+                <option value="30">15</option>
+                <!-- Add more options as needed -->
+            </select>
+
+        </div>
+    </div>
+    <table id="employeeTable" class="table table-light table-responsive-md table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Sr.</th>
+                <th scope="col">Document Name</th>
+                <th scope="col">CustomerId</th>
+                <th scope="col">Action</th>
+                <th scope="col">More</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let doc of documents; let i = index">
+                <td>
+                    {{ calculateSRNumber(i) }}
+                </td>
+                <td>
+                    {{doc.documentName}}
+                </td>
+                <div class="btn-group">
+
+                    <button class="btn btn-primary" (click)="getCustomerById(doc.customerId)">View
+                    </button>
+                </div>
+                <td>
+                    <div *ngIf="!doc.status">
+                        <button class="btn btn-primary" (click)="updateDocumentStatus(doc)">Approve</button>
+                    </div>
+                    <div *ngIf="doc.status">
+                        <p>Approved</p>
+                    </div>
+                </td>
+                <td>
+                    <button class="btn btn-primary" (click)="downloadDocument(doc)">Download</button>
+                </td>
+
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <nav aria-label="Page navigation example ">
+        <ul class="pagination justify-content-center">
+            <li class="page-item text-center ms-1" *ngIf="currentPage > 1">
+                <a class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item text-center ms-1" *ngFor="let page of pageNumbers">
+                <a class="page-link" [ngClass]="{ active: currentPage === page }" (click)="changePage(page)">{{ page
+                    }}</a>
+            </li>
+            <li class="page-item text-center ms-1" *ngIf="currentPage < pageNumbers.length">
+                <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

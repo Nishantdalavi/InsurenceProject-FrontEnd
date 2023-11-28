@@ -1,0 +1,18 @@
+<div class="modal-header">
+    <h4 class="modal-title">Plan Details</h4>
+    <button type="button" class="close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="plan-details">
+        <!-- You can add an image for the plan if needed -->
+        <h2>{{ plan?.planName }}</h2>
+        <p>Plan ID: {{ plan?.planId }}</p>
+
+        <!-- <p>Schemes Count: {{ plan?.schemesCount }}</p> -->
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Close</button>
+</div>
